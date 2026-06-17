@@ -3,7 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estadísticas del Club - EA SPORTS FC</title>
+    <title>Estadísticas del Club - FC Dutti</title>
+    
+    <!-- Configuración Web App (PWA) / iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FC Dutti">
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/AVS-PROJECTS33/FC-DUTTI/main/Sin%20t%C3%ADtulo.png">
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/AVS-PROJECTS33/FC-DUTTI/main/Sin%20t%C3%ADtulo.png">
+    
+    <!-- Truco del script invisible para forzar el icono en iOS -->
+    <script>
+        if (window.navigator.standalone === false || /iPhone|iPad|iPod/.test(navigator.userAgent)) {
+            // Se inyecta dinámicamente para saltarse la caché estricta de Safari
+            const link = document.createElement('link');
+            link.rel = 'apple-touch-icon';
+            link.href = 'https://raw.githubusercontent.com/AVS-PROJECTS33/FC-DUTTI/main/Sin%20t%C3%ADtulo.png?v=' + new Date().getTime(); 
+            document.head.appendChild(link);
+        }
+    </script>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome para iconos -->
@@ -23,7 +42,7 @@
                             dark: '#0a0a0a',
                             card: '#171717',
                             border: '#262626',
-                            accent: '#00ff66', // Verde neón típico de FC 24/25
+                            accent: '#00ff66', 
                             text: '#f5f5f5',
                             muted: '#a3a3a3'
                         }
@@ -45,6 +64,14 @@
         .form-w { color: #00ff66; font-weight: bold; }
         .form-d { color: #fbbf24; font-weight: bold; }
         .form-l { color: #ef4444; font-weight: bold; }
+        
+        /* Ocultar pestañas no activas */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Utilidad para ocultar barras de desplazamiento en móvil */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="min-h-screen font-sans antialiased selection:bg-fc-accent selection:text-black">
@@ -56,8 +83,8 @@
                 <i class="fa-solid fa-gamepad text-fc-accent text-2xl"></i>
                 <span class="font-bold text-xl tracking-tight">FC Tracker</span>
             </div>
-            <a href="#" class="text-sm text-fc-muted hover:text-white transition-colors">
-                <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Ver en EA
+            <a href="https://www.ea.com/games/ea-sports-fc/clubs/overview?clubId=6565028&platform=common-gen5" target="_blank" rel="noopener noreferrer" class="text-sm text-fc-muted hover:text-white transition-colors">
+                <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Ver Oficial
             </a>
         </div>
     </nav>
@@ -66,335 +93,328 @@
     <main class="max-w-6xl mx-auto px-4 py-8">
         
         <!-- Header del Club -->
-        <header class="glass-card rounded-2xl p-6 md:p-10 mb-8 relative overflow-hidden flex flex-col md:flex-row items-center gap-6 md:gap-10">
+        <header class="glass-card rounded-2xl p-4 md:p-10 mb-6 md:mb-8 relative overflow-hidden flex flex-col md:flex-row items-center gap-4 md:gap-10">
             <!-- Background Decoration -->
             <div class="absolute -right-20 -top-20 w-64 h-64 bg-fc-accent opacity-10 rounded-full blur-3xl"></div>
             
-            <div class="w-32 h-32 rounded-full border-4 border-fc-accent overflow-hidden flex-shrink-0 bg-gray-800 flex items-center justify-center relative shadow-[0_0_20px_rgba(0,255,102,0.3)]">
-                <!-- Fallback a icono si no hay escudo -->
-                <i class="fa-solid fa-shield-halved text-5xl text-gray-500 absolute z-0"></i>
-                <img id="club-crest" src="" alt="Escudo del Club" class="w-full h-full object-cover relative z-10 hidden">
+            <div class="w-32 h-32 md:w-40 md:h-40 rounded-full border-[3px] border-fc-accent overflow-hidden flex-shrink-0 bg-gray-100 flex items-center justify-center relative shadow-[0_0_20px_rgba(0,255,102,0.3)]">
+                <!-- Escudo de GitHub -->
+                <img src="https://raw.githubusercontent.com/AVS-PROJECTS33/FC-DUTTI/main/Sin%20t%C3%ADtulo.png" alt="FC Dutti Escudo" class="w-full h-full p-2 md:p-3 object-contain object-center transform scale-110 relative z-10 drop-shadow-md">
             </div>
             
-            <div class="text-center md:text-left flex-1 relative z-10">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-fc-dark border border-fc-border text-xs font-semibold text-fc-accent mb-3">
+            <div class="text-center md:text-left flex-1 relative z-10 w-full">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-fc-dark border border-fc-border text-[10px] md:text-xs font-semibold text-fc-accent mb-2">
                     <i class="fa-solid fa-trophy"></i>
-                    <span id="club-division">División Élite</span>
+                    <span id="club-division">Hometown Heroes</span>
                 </div>
-                <h1 id="club-name" class="text-4xl md:text-5xl font-black mb-2 tracking-tight">Cargando...</h1>
-                <p class="text-fc-muted flex items-center justify-center md:justify-start gap-2">
-                    <i class="fa-solid fa-users"></i> <span id="club-members">0 Miembros</span>
-                    <span class="text-fc-border px-2">|</span>
-                    <i class="fa-solid fa-globe"></i> <span id="club-region">Región</span>
+                <h1 id="club-name" class="text-3xl md:text-5xl font-black mb-2 tracking-tight">FC Dutti</h1>
+                <p class="text-fc-muted flex flex-wrap items-center justify-center md:justify-start gap-1 md:gap-2 text-xs md:text-base">
+                    <i class="fa-solid fa-users"></i> <span id="club-members">8 Miembros</span>
+                    <span class="text-fc-border px-1">|</span>
+                    <i class="fa-solid fa-globe"></i> <span id="club-region">Southern Europe</span>
+                    <span class="text-fc-border px-1">|</span>
+                    <i class="fa-solid fa-star text-yellow-500"></i> <span id="club-skill" class="font-bold text-white">1319 Skill</span>
                 </p>
             </div>
 
             <!-- Forma Reciente -->
-            <div class="bg-fc-dark rounded-xl p-4 border border-fc-border flex flex-col items-center md:items-end w-full md:w-auto relative z-10">
-                <span class="text-sm text-fc-muted mb-2 uppercase tracking-wider font-semibold">Forma Reciente</span>
-                <div id="club-form" class="flex gap-2 text-lg">
-                    <!-- Se llenará con JS -->
+            <div class="bg-fc-dark rounded-xl p-3 md:p-4 border border-fc-border flex flex-col items-center md:items-end w-full md:w-auto relative z-10">
+                <span class="text-xs md:text-sm text-fc-muted mb-2 uppercase tracking-wider font-semibold">Forma Reciente</span>
+                <div id="club-form" class="flex gap-2 text-base md:text-lg">
+                    <!-- Se inyectará vía JS -->
                 </div>
             </div>
         </header>
 
-        <!-- Grid de Estadísticas -->
-        <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-            <i class="fa-solid fa-chart-simple text-fc-accent"></i> Resumen de Temporada
-        </h2>
-        
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-10">
-            <!-- Partidos -->
-            <div class="glass-card rounded-xl p-6 flex flex-col justify-center items-center text-center transition-transform hover:-translate-y-1 hover:border-fc-accent">
-                <i class="fa-solid fa-futbol text-2xl text-fc-muted mb-3"></i>
-                <span id="stat-matches" class="text-4xl font-black mb-1">0</span>
-                <span class="text-sm text-fc-muted uppercase tracking-wider">Partidos</span>
-            </div>
-            
-            <!-- Victorias -->
-            <div class="glass-card rounded-xl p-6 flex flex-col justify-center items-center text-center transition-transform hover:-translate-y-1 hover:border-green-500">
-                <i class="fa-solid fa-check text-2xl text-green-500 mb-3"></i>
-                <span id="stat-wins" class="text-4xl font-black mb-1 text-green-500">0</span>
-                <span class="text-sm text-fc-muted uppercase tracking-wider">Victorias</span>
+        <!-- Navegación de Pestañas -->
+        <div class="flex overflow-x-auto no-scrollbar border-b border-fc-border mb-6 md:mb-8 gap-1 md:gap-8 snap-x">
+            <button onclick="switchTab('overview')" id="btn-overview" class="tab-btn snap-start whitespace-nowrap flex-1 md:flex-none px-4 py-3 text-xs md:text-sm font-bold uppercase tracking-wider border-b-2 border-fc-accent text-fc-accent transition-colors">
+                <i class="fa-solid fa-chart-pie mr-1 md:mr-2"></i>Resumen
+            </button>
+            <button onclick="switchTab('members')" id="btn-members" class="tab-btn snap-start whitespace-nowrap flex-1 md:flex-none px-4 py-3 text-xs md:text-sm font-bold uppercase tracking-wider border-b-2 border-transparent text-fc-muted hover:text-white transition-colors">
+                <i class="fa-solid fa-users mr-1 md:mr-2"></i>Miembros
+            </button>
+            <button onclick="switchTab('matches')" id="btn-matches" class="tab-btn snap-start whitespace-nowrap flex-1 md:flex-none px-4 py-3 text-xs md:text-sm font-bold uppercase tracking-wider border-b-2 border-transparent text-fc-muted hover:text-white transition-colors">
+                <i class="fa-solid fa-futbol mr-1 md:mr-2"></i>Partidos
+            </button>
+        </div>
+
+        <!-- CONTENIDO: PESTAÑA RESUMEN -->
+        <div id="tab-overview" class="tab-content active">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-10">
+                <!-- Partidos -->
+                <div class="glass-card rounded-xl p-6 flex flex-col justify-center items-center text-center transition-transform hover:-translate-y-1 hover:border-fc-accent">
+                    <i class="fa-solid fa-futbol text-2xl text-fc-muted mb-3"></i>
+                    <span id="stat-matches" class="text-4xl font-black mb-1">0</span>
+                    <span class="text-sm text-fc-muted uppercase tracking-wider">Partidos</span>
+                </div>
+                <!-- Victorias -->
+                <div class="glass-card rounded-xl p-6 flex flex-col justify-center items-center text-center transition-transform hover:-translate-y-1 hover:border-green-500">
+                    <i class="fa-solid fa-check text-2xl text-green-500 mb-3"></i>
+                    <span id="stat-wins" class="text-4xl font-black mb-1 text-green-500">0</span>
+                    <span class="text-sm text-fc-muted uppercase tracking-wider">Victorias</span>
+                </div>
+                <!-- Empates -->
+                <div class="glass-card rounded-xl p-6 flex flex-col justify-center items-center text-center transition-transform hover:-translate-y-1 hover:border-yellow-500">
+                    <i class="fa-solid fa-minus text-2xl text-yellow-500 mb-3"></i>
+                    <span id="stat-ties" class="text-4xl font-black mb-1 text-yellow-500">0</span>
+                    <span class="text-sm text-fc-muted uppercase tracking-wider">Empates</span>
+                </div>
+                <!-- Derrotas -->
+                <div class="glass-card rounded-xl p-6 flex flex-col justify-center items-center text-center transition-transform hover:-translate-y-1 hover:border-red-500">
+                    <i class="fa-solid fa-xmark text-2xl text-red-500 mb-3"></i>
+                    <span id="stat-losses" class="text-4xl font-black mb-1 text-red-500">0</span>
+                    <span class="text-sm text-fc-muted uppercase tracking-wider">Derrotas</span>
+                </div>
             </div>
 
-            <!-- Empates -->
-            <div class="glass-card rounded-xl p-6 flex flex-col justify-center items-center text-center transition-transform hover:-translate-y-1 hover:border-yellow-500">
-                <i class="fa-solid fa-minus text-2xl text-yellow-500 mb-3"></i>
-                <span id="stat-ties" class="text-4xl font-black mb-1 text-yellow-500">0</span>
-                <span class="text-sm text-fc-muted uppercase tracking-wider">Empates</span>
-            </div>
-
-            <!-- Derrotas -->
-            <div class="glass-card rounded-xl p-6 flex flex-col justify-center items-center text-center transition-transform hover:-translate-y-1 hover:border-red-500">
-                <i class="fa-solid fa-xmark text-2xl text-red-500 mb-3"></i>
-                <span id="stat-losses" class="text-4xl font-black mb-1 text-red-500">0</span>
-                <span class="text-sm text-fc-muted uppercase tracking-wider">Derrotas</span>
+            <!-- Estadísticas de Goles & Ratio -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <!-- Win Rate -->
+                <div class="glass-card rounded-xl p-6 flex items-center justify-between">
+                    <div>
+                        <h3 class="text-fc-muted text-sm uppercase tracking-wider font-semibold mb-1">Victorias</h3>
+                        <div class="flex items-end gap-2">
+                            <span id="stat-winrate" class="text-3xl font-bold text-green-500">0%</span>
+                        </div>
+                    </div>
+                    <div class="w-16 h-16 rounded-full border-4 border-fc-border flex items-center justify-center relative">
+                        <svg class="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                            <path class="text-fc-border" stroke-dasharray="100, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+                            <path id="winrate-circle" class="text-green-500" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"></path>
+                        </svg>
+                        <i class="fa-solid fa-percent text-sm text-fc-muted"></i>
+                    </div>
+                </div>
+                <!-- Goles a Favor -->
+                <div class="glass-card rounded-xl p-6 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-500">
+                        <i class="fa-solid fa-arrow-up text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-fc-muted text-sm uppercase tracking-wider font-semibold mb-1">Goles Anotados</h3>
+                        <div class="flex items-end gap-2">
+                            <span id="stat-goalsFor" class="text-3xl font-bold">0</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Goles en Contra -->
+                <div class="glass-card rounded-xl p-6 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center text-red-500">
+                        <i class="fa-solid fa-arrow-down text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-fc-muted text-sm uppercase tracking-wider font-semibold mb-1">Goles Recibidos</h3>
+                        <div class="flex items-end gap-2">
+                            <span id="stat-goalsAgainst" class="text-3xl font-bold">0</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Estadísticas de Goles & Ratio -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            
-            <!-- Win Rate -->
-            <div class="glass-card rounded-xl p-6 flex items-center justify-between">
-                <div>
-                    <h3 class="text-fc-muted text-sm uppercase tracking-wider font-semibold mb-1">Porcentaje de Victoria</h3>
-                    <div class="flex items-end gap-2">
-                        <span id="stat-winrate" class="text-3xl font-bold">0%</span>
-                    </div>
-                </div>
-                <div class="w-16 h-16 rounded-full border-4 border-fc-border flex items-center justify-center relative">
-                    <!-- Simulación de gráfico circular -->
-                    <svg class="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                        <path class="text-fc-border" stroke-dasharray="100, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
-                        <path id="winrate-circle" class="text-fc-accent" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"></path>
-                    </svg>
-                    <i class="fa-solid fa-percent text-sm text-fc-muted"></i>
-                </div>
-            </div>
-
-            <!-- Goles a Favor -->
-            <div class="glass-card rounded-xl p-6 flex items-center gap-4">
-                <div class="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-500">
-                    <i class="fa-solid fa-arrow-up text-xl"></i>
-                </div>
-                <div>
-                    <h3 class="text-fc-muted text-sm uppercase tracking-wider font-semibold mb-1">Goles a Favor</h3>
-                    <div class="flex items-end gap-2">
-                        <span id="stat-goalsFor" class="text-3xl font-bold">0</span>
-                        <span id="stat-goalsPerMatch" class="text-sm text-fc-muted mb-1">0.0 /partido</span>
-                    </div>
+        <!-- CONTENIDO: PESTAÑA MIEMBROS -->
+        <div id="tab-members" class="tab-content">
+            <div class="glass-card rounded-xl overflow-hidden">
+                <div class="overflow-x-auto no-scrollbar">
+                    <table class="w-full text-left border-collapse min-w-[900px] md:min-w-[1200px]">
+                        <thead>
+                            <tr class="bg-fc-accent text-black text-xs md:text-sm uppercase tracking-wider">
+                                <th class="p-3 md:p-4 font-bold sticky left-0 bg-fc-accent z-10">Miembro</th>
+                                <th class="p-3 md:p-4 font-bold text-center">Media</th>
+                                <th class="p-3 md:p-4 font-bold text-center">Partidos</th>
+                                <th class="p-3 md:p-4 font-bold text-center">Goles</th>
+                                <th class="p-3 md:p-4 font-bold text-center">Asistencias</th>
+                                <th class="p-3 md:p-4 font-bold text-center">Pases</th>
+                                <th class="p-3 md:p-4 font-bold text-center">% Pases</th>
+                                <th class="p-3 md:p-4 font-bold text-center">Entradas</th>
+                                <th class="p-3 md:p-4 font-bold text-center">% Entradas</th>
+                                <th class="p-3 md:p-4 font-bold text-center">Porterías a Cero</th>
+                                <th class="p-3 md:p-4 font-bold text-center">% Victorias</th>
+                            </tr>
+                        </thead>
+                        <tbody id="members-table-body" class="divide-y divide-fc-border">
+                            <!-- Inyectado por JS -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
+        </div>
 
-            <!-- Goles en Contra -->
-            <div class="glass-card rounded-xl p-6 flex items-center gap-4">
-                <div class="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center text-red-500">
-                    <i class="fa-solid fa-arrow-down text-xl"></i>
-                </div>
-                <div>
-                    <h3 class="text-fc-muted text-sm uppercase tracking-wider font-semibold mb-1">Goles en Contra</h3>
-                    <div class="flex items-end gap-2">
-                        <span id="stat-goalsAgainst" class="text-3xl font-bold">0</span>
-                        <span id="stat-goalsAgainstPerMatch" class="text-sm text-fc-muted mb-1">0.0 /partido</span>
-                    </div>
-                </div>
+        <!-- CONTENIDO: PESTAÑA ÚLTIMOS PARTIDOS -->
+        <div id="tab-matches" class="tab-content">
+            <div id="matches-container" class="flex flex-col gap-4">
+                <!-- Inyectado por JS -->
             </div>
-
         </div>
 
     </main>
 
     <!-- Footer -->
     <footer class="border-t border-fc-border py-8 text-center text-fc-muted text-sm mt-10">
-        <p>App de Estadísticas no oficial. Los datos y marcas pertenecen a Electronic Arts Inc.</p>
+        <p>Dashboard personalizado de FC Dutti basado en las estadísticas proporcionadas.</p>
     </footer>
 
     <!-- Lógica de la Aplicación -->
     <script>
-        // === CONFIGURACIÓN ===
-        // Aquí está el ID exacto de FC Dutti y la plataforma
-        const CLUB_ID = "6565028";
-        const PLATFORM = "common-gen5";
+        // DATOS EXTRAÍDOS DE TUS CAPTURAS (Datos Estáticos)
+        const fcDuttiData = {
+            stats: {
+                matchesPlayed: 71,
+                wins: 28,
+                ties: 7,
+                losses: 36,
+                goalsFor: 116,
+                goalsAgainst: 154,
+                winRate: 39.44, // Extraído de la gráfica de pastel
+                recentForm: ['L', 'L', 'L', 'W', 'W'] // Basado en el historial
+            },
+            members: [
+                { name: "danyskaywalker", pos: "Centrocampista", ovr: 79, games: 5, goals: 1, passes: 82, passRate: 85, assists: 3, tackles: 7, tackleRate: 14, cleanSheets: 0, winPct: 20 },
+                { name: "DAVILICO_86", pos: "Centrocampista", ovr: 73, games: 7, goals: 0, passes: 69, passRate: 65, assists: 2, tackles: 1, tackleRate: 10, cleanSheets: 0, winPct: 14 },
+                { name: "gongory", pos: "Centrocampista", ovr: 82, games: 36, goals: 13, passes: 1014, passRate: 80, assists: 13, tackles: 49, tackleRate: 16, cleanSheets: 0, winPct: 47 },
+                { name: "MaJin8", pos: "Centrocampista", ovr: 79, games: 7, goals: 3, passes: 191, passRate: 84, assists: 0, tackles: 15, tackleRate: 36, cleanSheets: 0, winPct: 28 },
+                { name: "nurdine89", pos: "Delantero", ovr: 85, games: 50, goals: 16, passes: 783, passRate: 77, assists: 15, tackles: 40, tackleRate: 13, cleanSheets: 0, winPct: 36 },
+                { name: "Perlu28", pos: "Centrocampista", ovr: 81, games: 51, goals: 10, passes: 684, passRate: 75, assists: 9, tackles: 92, tackleRate: 20, cleanSheets: 0, winPct: 39 },
+                { name: "Solraac_", pos: "Centrocampista", ovr: 79, games: 48, goals: 31, passes: 700, passRate: 76, assists: 13, tackles: 54, tackleRate: 36, cleanSheets: 0, winPct: 50 },
+                { name: "xPatoloko85x", pos: "Delantero", ovr: 85, games: 28, goals: 14, passes: 630, passRate: 83, assists: 7, tackles: 43, tackleRate: 37, cleanSheets: 0, winPct: 39 }
+            ],
+            matches: [
+                { opponent: "PassiMboul nl", scoreOurs: 1, scoreTheirs: 7, result: "L" },
+                { opponent: "Kobab Alisal FC", scoreOurs: 1, scoreTheirs: 2, result: "L" },
+                { opponent: "Gitanos FC5", scoreOurs: 0, scoreTheirs: 1, result: "L" },
+                { opponent: "MAROKHA FC", scoreOurs: 1, scoreTheirs: 0, result: "W" },
+                { opponent: "puftu fc", scoreOurs: 3, scoreTheirs: 0, result: "W" }
+            ]
+        };
 
-        // Función para consumir la API de EA usando Proxies para evitar el bloqueo CORS
-        async function fetchEAData(endpoint) {
-            const eaUrl = `https://proclubs.ea.com/api/fc/clubs/${endpoint}?platform=${PLATFORM}&clubIds=${CLUB_ID}`;
-            
-            // Usamos múltiples proxies como respaldo en caso de que uno falle
-            const proxies = [
-                `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(eaUrl)}`,
-                `https://corsproxy.io/?${encodeURIComponent(eaUrl)}`,
-                `https://api.allorigins.win/get?url=${encodeURIComponent(eaUrl)}`
-            ];
+        // --- SISTEMA DE PESTAÑAS ---
+        function switchTab(tabId) {
+            // Ocultar todos los contenidos
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            // Resetear todos los botones
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('border-fc-accent', 'text-fc-accent');
+                btn.classList.add('border-transparent', 'text-fc-muted');
+            });
 
-            let lastError = null;
-
-            for (let proxyUrl of proxies) {
-                try {
-                    const response = await fetch(proxyUrl);
-                    if (!response.ok) throw new Error('Error HTTP: ' + response.status);
-                    
-                    const data = await response.json();
-                    
-                    // AllOrigins guarda la respuesta en .contents como string
-                    if (proxyUrl.includes('allorigins') && data.contents) {
-                        return JSON.parse(data.contents);
-                    }
-                    return data;
-                } catch (error) {
-                    console.warn(`Proxy falló (${proxyUrl}):`, error.message);
-                    lastError = error;
-                    // El bucle continuará y probará con el siguiente proxy del array
-                }
-            }
-            
-            throw lastError || new Error('Todos los proxies fallaron');
+            // Mostrar el contenido seleccionado
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+            // Activar el botón seleccionado
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            activeBtn.classList.remove('border-transparent', 'text-fc-muted');
+            activeBtn.classList.add('border-fc-accent', 'text-fc-accent');
         }
 
-        // Función para renderizar los datos en el HTML
-        function renderDashboard(data) {
-            // Cabecera
-            document.getElementById('club-name').textContent = data.name;
-            document.getElementById('club-division').textContent = data.division;
-            document.getElementById('club-members').textContent = data.members + " Miembros";
-            document.getElementById('club-region').textContent = data.region;
-            
-            if(data.crestUrl) {
-                const img = document.getElementById('club-crest');
-                img.src = data.crestUrl;
-                img.classList.remove('hidden');
-            }
-
-            // Forma Reciente
+        // --- RENDERIZADO DE DATOS ---
+        function renderData() {
+            // Forma reciente
             const formContainer = document.getElementById('club-form');
             formContainer.innerHTML = '';
+            fcDuttiData.stats.recentForm.forEach(result => {
+                const span = document.createElement('span');
+                if(result === 'W') { span.className = 'form-w'; span.textContent = 'V'; }
+                else if(result === 'D') { span.className = 'form-d'; span.textContent = 'E'; }
+                else { span.className = 'form-l'; span.textContent = 'D'; }
+                formContainer.appendChild(span);
+            });
+
+            // Resumen Stats
+            document.getElementById('stat-matches').textContent = fcDuttiData.stats.matchesPlayed;
+            document.getElementById('stat-wins').textContent = fcDuttiData.stats.wins;
+            document.getElementById('stat-ties').textContent = fcDuttiData.stats.ties;
+            document.getElementById('stat-losses').textContent = fcDuttiData.stats.losses;
+            document.getElementById('stat-goalsFor').textContent = fcDuttiData.stats.goalsFor;
+            document.getElementById('stat-goalsAgainst').textContent = fcDuttiData.stats.goalsAgainst;
             
-            if (data.stats.recentForm.length === 0) {
-                formContainer.innerHTML = '<span class="text-sm text-fc-muted">Sin datos</span>';
-            } else {
-                data.stats.recentForm.forEach(result => {
-                    const span = document.createElement('span');
-                    if(result === 'W') {
-                        span.className = 'form-w';
-                        span.textContent = 'V';
-                    } else if(result === 'D') {
-                        span.className = 'form-d';
-                        span.textContent = 'E';
-                    } else {
-                        span.className = 'form-l';
-                        span.textContent = 'D';
-                    }
-                    formContainer.appendChild(span);
-                });
-            }
+            document.getElementById('stat-winrate').textContent = fcDuttiData.stats.winRate + '%';
+            document.getElementById('winrate-circle').setAttribute('stroke-dasharray', `${fcDuttiData.stats.winRate}, 100`);
 
-            // Stats Principales
-            document.getElementById('stat-matches').textContent = data.stats.matchesPlayed;
-            
-            // Animación sencilla de contadores
-            animateValue("stat-wins", 0, data.stats.wins, 1000);
-            animateValue("stat-ties", 0, data.stats.ties, 1000);
-            animateValue("stat-losses", 0, data.stats.losses, 1000);
-            
-            // Cálculos derivados (Winrate)
-            let winRate = 0;
-            if (data.stats.matchesPlayed > 0) {
-                winRate = ((data.stats.wins / data.stats.matchesPlayed) * 100).toFixed(1);
-            }
-            document.getElementById('stat-winrate').textContent = winRate + '%';
-            
-            // Actualizar círculo SVG
-            document.getElementById('winrate-circle').setAttribute('stroke-dasharray', `${winRate}, 100`);
+            // Generar Tabla de Miembros
+            const membersBody = document.getElementById('members-table-body');
+            membersBody.innerHTML = '';
+            fcDuttiData.members.forEach(member => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-white/5 transition-colors relative";
+                tr.innerHTML = `
+                    <td class="p-3 md:p-4 flex items-center gap-2 md:gap-3 sticky left-0 bg-[#171717]/95 backdrop-blur-md z-10 border-r border-fc-border/30">
+                        <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gray-700 flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-user text-gray-400 text-xs md:text-base"></i>
+                        </div>
+                        <div class="min-w-0 pr-2">
+                            <div class="font-bold text-white text-sm md:text-lg truncate">${member.name}</div>
+                            <div class="text-[10px] md:text-xs text-fc-muted truncate">${member.pos}</div>
+                        </div>
+                    </td>
+                    <td class="p-3 md:p-4 text-center font-bold text-base md:text-lg">${member.ovr}</td>
+                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.games}</td>
+                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.goals}</td>
+                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.assists}</td>
+                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.passes}</td>
+                    <td class="p-3 md:p-4 text-center text-sm md:text-base font-semibold ${member.passRate >= 80 ? 'text-green-500' : 'text-yellow-500'}">${member.passRate}%</td>
+                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.tackles}</td>
+                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.tackleRate}%</td>
+                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.cleanSheets}</td>
+                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.winPct}%</td>
+                `;
+                membersBody.appendChild(tr);
+            });
 
-            // Medias de Goles
-            let goalsPerMatch = "0.00";
-            let goalsAgainstPerMatch = "0.00";
-            
-            if (data.stats.matchesPlayed > 0) {
-                goalsPerMatch = (data.stats.goalsFor / data.stats.matchesPlayed).toFixed(2);
-                goalsAgainstPerMatch = (data.stats.goalsAgainst / data.stats.matchesPlayed).toFixed(2);
-            }
+            // Escudo de imagen reutilizable para el historial desde GitHub
+            const customShieldSVG = `
+                <img src="https://raw.githubusercontent.com/AVS-PROJECTS33/FC-DUTTI/main/Sin%20t%C3%ADtulo.png" alt="FC Dutti" class="w-full h-full p-1 object-contain object-center transform scale-110 drop-shadow-sm">
+            `;
 
-            document.getElementById('stat-goalsFor').textContent = data.stats.goalsFor;
-            document.getElementById('stat-goalsPerMatch').textContent = goalsPerMatch + ' /partido';
-            
-            document.getElementById('stat-goalsAgainst').textContent = data.stats.goalsAgainst;
-            document.getElementById('stat-goalsAgainstPerMatch').textContent = goalsAgainstPerMatch + ' /partido';
-        }
+            // Generar Historial de Partidos
+            const matchesContainer = document.getElementById('matches-container');
+            matchesContainer.innerHTML = '';
+            fcDuttiData.matches.forEach((match, index) => {
+                const isWin = match.result === 'W';
+                const isDraw = match.result === 'D';
+                const borderColor = isWin ? 'border-green-500' : (isDraw ? 'border-yellow-500' : 'border-red-500');
+                const badgeColor = isWin ? 'bg-green-500 text-black' : (isDraw ? 'bg-yellow-500 text-black' : 'bg-red-500 text-white');
+                const badgeTextMobile = isWin ? 'V' : (isDraw ? 'E' : 'D');
 
-        // Función para animar los números al cargar
-        function animateValue(id, start, end, duration) {
-            const obj = document.getElementById(id);
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                obj.innerHTML = Math.floor(progress * (end - start) + start);
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                } else {
-                    obj.innerHTML = end;
-                }
-            };
-            window.requestAnimationFrame(step);
-        }
-
-        // SISTEMA AUTOMÁTICO DE EXTRACCIÓN
-        async function loadClubData() {
-            try {
-                // Indicador visual de que estamos haciendo magia
-                document.getElementById('club-name').textContent = "Conectando con EA...";
-
-                // 1. 'info': Trae el nombre, región, división, etc.
-                // 2. 'overallStats': Trae partidos, victorias, goles, etc.
-                const [infoData, statsData] = await Promise.all([
-                    fetchEAData('info'),
-                    fetchEAData('overallStats')
-                ]);
-
-                // EA a veces devuelve un array, y otras un objeto con la ID del club como llave. Filtramos:
-                const info = (Array.isArray(infoData) ? infoData[0] : (infoData[CLUB_ID] || Object.values(infoData)[0])) || {};
-                const stats = (Array.isArray(statsData) ? statsData[0] : (statsData[CLUB_ID] || Object.values(statsData)[0])) || {};
-
-                // Construimos la racha de partidos (Si EA la provee)
-                let recentFormParsed = [];
-                if (stats.recentResults && Array.isArray(stats.recentResults)) {
-                    recentFormParsed = stats.recentResults.map(r => {
-                        const val = parseInt(r);
-                        if (val === 1) return 'W'; // Victoria
-                        if (val === 2) return 'L'; // Derrota
-                        if (val === 3) return 'D'; // Empate
-                        return 'D'; 
-                    }).slice(0, 5); 
-                }
-
-                // Mapeamos los datos limpios a la variable
-                const mappedData = {
-                    name: info.name || "FC Dutti",
-                    division: `División ${info.currentDivision || '?' }`,
-                    members: info.membersCount || info.members || 0,
-                    region: info.regionName || "Global",
-                    crestUrl: "", 
-                    stats: {
-                        matchesPlayed: parseInt(stats.gamesPlayed || stats.matchesPlayed || 0),
-                        wins: parseInt(stats.wins || 0),
-                        ties: parseInt(stats.ties || 0),
-                        losses: parseInt(stats.losses || 0),
-                        goalsFor: parseInt(stats.goals || stats.goalsFor || 0),
-                        goalsAgainst: parseInt(stats.goalsAgainst || 0),
-                        recentForm: recentFormParsed
-                    }
-                };
-
-                // Disparamos el render
-                renderDashboard(mappedData);
-
-            } catch (error) {
-                console.error("Error al obtener los datos automáticos:", error);
+                const div = document.createElement('div');
+                div.className = `glass-card rounded-xl p-3 md:p-6 border-l-4 ${borderColor} flex flex-row items-center justify-between gap-2 md:gap-6 relative`;
                 
-                // Mostrar datos offline si falla la conexión en lugar de romperse la UI
-                const fallbackData = {
-                    name: "FC Dutti",
-                    division: "Modo Offline",
-                    members: 0,
-                    region: "Desconocida",
-                    crestUrl: "",
-                    stats: {
-                        matchesPlayed: 0, wins: 0, ties: 0, losses: 0,
-                        goalsFor: 0, goalsAgainst: 0, recentForm: []
-                    }
-                };
-                renderDashboard(fallbackData);
-                document.getElementById('club-division').classList.replace('text-fc-accent', 'text-red-500');
-                document.getElementById('club-form').innerHTML = '<span class="text-sm text-fc-muted text-red-400">Error de conexión</span>';
-            }
+                div.innerHTML = `
+                    <!-- Nosotros -->
+                    <div class="text-center w-[28%] md:w-24">
+                        <div class="w-10 h-10 md:w-12 md:h-12 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-1 md:mb-2 border border-fc-border p-1">
+                            ${customShieldSVG}
+                        </div>
+                        <span class="font-bold text-[10px] md:text-sm block truncate w-full">FC Dutti</span>
+                    </div>
+
+                    <!-- Marcador -->
+                    <div class="flex items-center justify-center gap-1 md:gap-3 w-[35%] md:w-[40%]">
+                        <div class="text-xl md:text-3xl font-black bg-fc-dark w-8 h-10 md:w-12 md:h-14 flex items-center justify-center rounded-lg border border-fc-border ${match.scoreOurs > match.scoreTheirs ? 'text-fc-accent' : ''}">${match.scoreOurs}</div>
+                        <span class="text-fc-muted font-bold text-sm md:text-base">-</span>
+                        <div class="text-xl md:text-3xl font-black bg-fc-dark w-8 h-10 md:w-12 md:h-14 flex items-center justify-center rounded-lg border border-fc-border ${match.scoreTheirs > match.scoreOurs ? 'text-fc-accent' : ''}">${match.scoreTheirs}</div>
+                    </div>
+
+                    <!-- Rival -->
+                    <div class="text-center w-[28%] md:w-24">
+                        <div class="w-10 h-10 md:w-12 md:h-12 mx-auto bg-gray-800 rounded-full flex items-center justify-center mb-1 md:mb-2 border border-fc-border">
+                            <i class="fa-solid fa-shield text-gray-400 text-sm md:text-base"></i>
+                        </div>
+                        <span class="font-bold text-[10px] md:text-sm block truncate w-full" title="${match.opponent}">${match.opponent}</span>
+                    </div>
+
+                    <!-- Etiqueta Resultado -->
+                    <div class="absolute top-2 right-2 md:relative md:top-auto md:right-auto px-2 py-1 rounded text-[10px] md:text-xs font-bold uppercase tracking-wider ${badgeColor}">
+                        <span class="md:hidden">${badgeTextMobile}</span>
+                        <span class="hidden md:inline">${isWin ? 'VICTORIA' : (isDraw ? 'EMPATE' : 'DERROTA')}</span>
+                    </div>
+                `;
+                matchesContainer.appendChild(div);
+            });
         }
 
-        // Ejecutar el sistema en cuanto cargue la página
+        // Inicializar
         document.addEventListener('DOMContentLoaded', () => {
-            loadClubData();
+            renderData();
         });
 
     </script>
