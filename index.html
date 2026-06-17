@@ -1,1 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas del Club - EA SPORTS FC</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        fc: {
+                            dark: '#0a0a0a',
+                            card: '#171717',
+                            border: '#262626',
+                            accent: '#00ff66', // Verde neón típico de FC 24/25
+                            text: '#f5f5f5',
+                            muted: '#a3a3a3'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #f5f5f5;
+        }
+        .glass-card {
+            background: rgba(23, 23, 23, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid #262626;
+        }
+        .form-w { color: #00ff66; font-weight: bold; }
+        .form-d { color: #fbbf24; font-weight: bold; }
+        .form-l { color: #ef4444; font-weight: bold; }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased selection:bg-fc-accent selection:text-black">
 
+    <!-- Navbar -->
+    <nav class="bg-fc-card border-b border-fc-border px-6 py-4 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-gamepad text-fc-accent text-2xl"></i>
+                <span class="font-bold text-xl tracking-tight">FC Tracker</span>
+            </div>
+            <a href="#" class="text-sm text-fc-muted hover:text-white transition-colors">
+                <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Ver en EA
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-8">
+        
+        <!-- Header del Club -->
+        <header class="glass-card rounded-2xl p-6 md:p-10 mb-8 relative overflow-hidden flex flex-col md:flex-row items-center gap-6 md:gap-10">
+            <!-- Background Decoration -->
+            <div class="absolute -right-20 -top-20 w-64 h-64 bg-fc-accent opacity-10 rounded-full blur-3xl"></div>
+            
+            <div class="w-32 h-32 rounded-full border-4 border-fc-accent overflow-hidden flex-shrink-0 bg-gray-800 flex items-center justify-center relative shadow-[0_0_20px_rgba(0,255,102,0.3)]">
+                <!-- Fallback a icono si no hay escudo -->
+                <i class="fa-solid fa-shield-halved text-5xl text-gray-500 absolute z-0"></i>
+                <img id="club-crest" src="" alt="Escudo del Club" class="w-full h-full object-cover relative z-10 hidden">
+            </div>
+            
+            <div class="text-center md:text-left flex-1 relative z-10">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-fc-dark border border-fc-border text-xs font-semibold text-fc-accent mb-3">
+                    <i class="fa-solid fa-trophy"></i>
+                    <span id="club-division">División Élite</span>
+                </div>
+                <h1 id="club-name" class="text-4xl md:text-5xl font-black mb-2 tracking-tight">Cargando...</h1>
+                <p class="text-fc-muted flex items-center justify-center md:justify-start gap-2">
+                    <i class="fa-solid fa-users"></i> <span id="club-members">0 Miembros</span>
+                    <span class="text-fc-border px-2">|</span>
+                    <i class="fa-solid fa-globe"></i> <span id="club-region">Región</span>
+                </p>
+            </div>
+
+            <!-- Forma Reciente -->
+            <div class="bg-fc-dark rounded-xl p-4 border border-fc-border flex flex-col items-center md:items-end w-full md:w-auto relative z-10">
+                <span class="text-sm text-fc-muted mb-2 uppercase tracking-wider font-semibold">Forma Reciente</span>
+                <div id="club-form" class="flex gap-2 text-lg">
+                    <!-- Se llenará con JS -->
+                </div>
+            </div>
+        </header>
+
+        <!-- Grid de Estadísticas -->
+        <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+            <i class="fa-solid fa-chart-simple text-fc-accent"></i> Resumen de Temporada
+        </h2>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-10">
+            <!-- Partidos -->
+            <div class="glass-card rounded-xl p-6 flex flex-col justify-center items-center text-center transition-transform hover:-translate-y-1 hover:border-fc-accent">
+                <i class="fa-solid fa-futbol text-2xl text-fc-muted mb-3"></i>
+                <span id="stat-matches" class="text-4xl font-black mb-1">0</span>
+                <span class="text-sm text-fc-muted uppercase tracking-wider">Partidos</span>
+            </div>
+            
+            <!-- Victorias -->
+            <div class="glass-card rounded-xl p-6 flex flex-col justify-center items-center text-center transition-transform hover:-translate-y-1 hover:border-green-500">
+                <i class="fa-solid fa-check text-2xl text-green-500 mb-3"></i>
+                <span id="stat-wins" class="text-4xl font-black mb-1 text-green-500">0</span>
+                <span class="text-sm text-fc-muted uppercase tracking-wider">Victorias</span>
+            </div>
+
+            <!-- Empates -->
+            <div class="glass-card rounded-xl p-6 flex flex-col justify-center items-center text-center transition-transform hover:-translate-y-1 hover:border-yellow-500">
+                <i class="fa-solid fa-minus text-2xl text-yellow-500 mb-3"></i>
+                <span id="stat-ties" class="text-4xl font-black mb-1 text-yellow-500">0</span>
+                <span class="text-sm text-fc-muted uppercase tracking-wider">Empates</span>
+            </div>
+
+            <!-- Derrotas -->
+            <div class="glass-card rounded-xl p-6 flex flex-col justify-center items-center text-center transition-transform hover:-translate-y-1 hover:border-red-500">
+                <i class="fa-solid fa-xmark text-2xl text-red-500 mb-3"></i>
+                <span id="stat-losses" class="text-4xl font-black mb-1 text-red-500">0</span>
+                <span class="text-sm text-fc-muted uppercase tracking-wider">Derrotas</span>
+            </div>
+        </div>
+
+        <!-- Estadísticas de Goles & Ratio -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            
+            <!-- Win Rate -->
+            <div class="glass-card rounded-xl p-6 flex items-center justify-between">
+                <div>
+                    <h3 class="text-fc-muted text-sm uppercase tracking-wider font-semibold mb-1">Porcentaje de Victoria</h3>
+                    <div class="flex items-end gap-2">
+                        <span id="stat-winrate" class="text-3xl font-bold">0%</span>
+                    </div>
+                </div>
+                <div class="w-16 h-16 rounded-full border-4 border-fc-border flex items-center justify-center relative">
+                    <!-- Simulación de gráfico circular -->
+                    <svg class="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                        <path class="text-fc-border" stroke-dasharray="100, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+                        <path id="winrate-circle" class="text-fc-accent" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"></path>
+                    </svg>
+                    <i class="fa-solid fa-percent text-sm text-fc-muted"></i>
+                </div>
+            </div>
+
+            <!-- Goles a Favor -->
+            <div class="glass-card rounded-xl p-6 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-500">
+                    <i class="fa-solid fa-arrow-up text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-fc-muted text-sm uppercase tracking-wider font-semibold mb-1">Goles a Favor</h3>
+                    <div class="flex items-end gap-2">
+                        <span id="stat-goalsFor" class="text-3xl font-bold">0</span>
+                        <span id="stat-goalsPerMatch" class="text-sm text-fc-muted mb-1">0.0 /partido</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Goles en Contra -->
+            <div class="glass-card rounded-xl p-6 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center text-red-500">
+                    <i class="fa-solid fa-arrow-down text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-fc-muted text-sm uppercase tracking-wider font-semibold mb-1">Goles en Contra</h3>
+                    <div class="flex items-end gap-2">
+                        <span id="stat-goalsAgainst" class="text-3xl font-bold">0</span>
+                        <span id="stat-goalsAgainstPerMatch" class="text-sm text-fc-muted mb-1">0.0 /partido</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-fc-border py-8 text-center text-fc-muted text-sm mt-10">
+        <p>App de Estadísticas no oficial. Los datos y marcas pertenecen a Electronic Arts Inc.</p>
+    </footer>
+
+    <!-- Lógica de la Aplicación -->
+    <script>
+        // === CONFIGURACIÓN ===
+        // Aquí está el ID exacto de FC Dutti y la plataforma
+        const CLUB_ID = "6565028";
+        const PLATFORM = "common-gen5";
+
+        // Función para consumir la API de EA usando Proxies para evitar el bloqueo CORS
+        async function fetchEAData(endpoint) {
+            const eaUrl = `https://proclubs.ea.com/api/fc/clubs/${endpoint}?platform=${PLATFORM}&clubIds=${CLUB_ID}`;
+            
+            // Usamos múltiples proxies como respaldo en caso de que uno falle
+            const proxies = [
+                `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(eaUrl)}`,
+                `https://corsproxy.io/?${encodeURIComponent(eaUrl)}`,
+                `https://api.allorigins.win/get?url=${encodeURIComponent(eaUrl)}`
+            ];
+
+            let lastError = null;
+
+            for (let proxyUrl of proxies) {
+                try {
+                    const response = await fetch(proxyUrl);
+                    if (!response.ok) throw new Error('Error HTTP: ' + response.status);
+                    
+                    const data = await response.json();
+                    
+                    // AllOrigins guarda la respuesta en .contents como string
+                    if (proxyUrl.includes('allorigins') && data.contents) {
+                        return JSON.parse(data.contents);
+                    }
+                    return data;
+                } catch (error) {
+                    console.warn(`Proxy falló (${proxyUrl}):`, error.message);
+                    lastError = error;
+                    // El bucle continuará y probará con el siguiente proxy del array
+                }
+            }
+            
+            throw lastError || new Error('Todos los proxies fallaron');
+        }
+
+        // Función para renderizar los datos en el HTML
+        function renderDashboard(data) {
+            // Cabecera
+            document.getElementById('club-name').textContent = data.name;
+            document.getElementById('club-division').textContent = data.division;
+            document.getElementById('club-members').textContent = data.members + " Miembros";
+            document.getElementById('club-region').textContent = data.region;
+            
+            if(data.crestUrl) {
+                const img = document.getElementById('club-crest');
+                img.src = data.crestUrl;
+                img.classList.remove('hidden');
+            }
+
+            // Forma Reciente
+            const formContainer = document.getElementById('club-form');
+            formContainer.innerHTML = '';
+            
+            if (data.stats.recentForm.length === 0) {
+                formContainer.innerHTML = '<span class="text-sm text-fc-muted">Sin datos</span>';
+            } else {
+                data.stats.recentForm.forEach(result => {
+                    const span = document.createElement('span');
+                    if(result === 'W') {
+                        span.className = 'form-w';
+                        span.textContent = 'V';
+                    } else if(result === 'D') {
+                        span.className = 'form-d';
+                        span.textContent = 'E';
+                    } else {
+                        span.className = 'form-l';
+                        span.textContent = 'D';
+                    }
+                    formContainer.appendChild(span);
+                });
+            }
+
+            // Stats Principales
+            document.getElementById('stat-matches').textContent = data.stats.matchesPlayed;
+            
+            // Animación sencilla de contadores
+            animateValue("stat-wins", 0, data.stats.wins, 1000);
+            animateValue("stat-ties", 0, data.stats.ties, 1000);
+            animateValue("stat-losses", 0, data.stats.losses, 1000);
+            
+            // Cálculos derivados (Winrate)
+            let winRate = 0;
+            if (data.stats.matchesPlayed > 0) {
+                winRate = ((data.stats.wins / data.stats.matchesPlayed) * 100).toFixed(1);
+            }
+            document.getElementById('stat-winrate').textContent = winRate + '%';
+            
+            // Actualizar círculo SVG
+            document.getElementById('winrate-circle').setAttribute('stroke-dasharray', `${winRate}, 100`);
+
+            // Medias de Goles
+            let goalsPerMatch = "0.00";
+            let goalsAgainstPerMatch = "0.00";
+            
+            if (data.stats.matchesPlayed > 0) {
+                goalsPerMatch = (data.stats.goalsFor / data.stats.matchesPlayed).toFixed(2);
+                goalsAgainstPerMatch = (data.stats.goalsAgainst / data.stats.matchesPlayed).toFixed(2);
+            }
+
+            document.getElementById('stat-goalsFor').textContent = data.stats.goalsFor;
+            document.getElementById('stat-goalsPerMatch').textContent = goalsPerMatch + ' /partido';
+            
+            document.getElementById('stat-goalsAgainst').textContent = data.stats.goalsAgainst;
+            document.getElementById('stat-goalsAgainstPerMatch').textContent = goalsAgainstPerMatch + ' /partido';
+        }
+
+        // Función para animar los números al cargar
+        function animateValue(id, start, end, duration) {
+            const obj = document.getElementById(id);
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                } else {
+                    obj.innerHTML = end;
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // SISTEMA AUTOMÁTICO DE EXTRACCIÓN
+        async function loadClubData() {
+            try {
+                // Indicador visual de que estamos haciendo magia
+                document.getElementById('club-name').textContent = "Conectando con EA...";
+
+                // 1. 'info': Trae el nombre, región, división, etc.
+                // 2. 'overallStats': Trae partidos, victorias, goles, etc.
+                const [infoData, statsData] = await Promise.all([
+                    fetchEAData('info'),
+                    fetchEAData('overallStats')
+                ]);
+
+                // EA a veces devuelve un array, y otras un objeto con la ID del club como llave. Filtramos:
+                const info = (Array.isArray(infoData) ? infoData[0] : (infoData[CLUB_ID] || Object.values(infoData)[0])) || {};
+                const stats = (Array.isArray(statsData) ? statsData[0] : (statsData[CLUB_ID] || Object.values(statsData)[0])) || {};
+
+                // Construimos la racha de partidos (Si EA la provee)
+                let recentFormParsed = [];
+                if (stats.recentResults && Array.isArray(stats.recentResults)) {
+                    recentFormParsed = stats.recentResults.map(r => {
+                        const val = parseInt(r);
+                        if (val === 1) return 'W'; // Victoria
+                        if (val === 2) return 'L'; // Derrota
+                        if (val === 3) return 'D'; // Empate
+                        return 'D'; 
+                    }).slice(0, 5); 
+                }
+
+                // Mapeamos los datos limpios a la variable
+                const mappedData = {
+                    name: info.name || "FC Dutti",
+                    division: `División ${info.currentDivision || '?' }`,
+                    members: info.membersCount || info.members || 0,
+                    region: info.regionName || "Global",
+                    crestUrl: "", 
+                    stats: {
+                        matchesPlayed: parseInt(stats.gamesPlayed || stats.matchesPlayed || 0),
+                        wins: parseInt(stats.wins || 0),
+                        ties: parseInt(stats.ties || 0),
+                        losses: parseInt(stats.losses || 0),
+                        goalsFor: parseInt(stats.goals || stats.goalsFor || 0),
+                        goalsAgainst: parseInt(stats.goalsAgainst || 0),
+                        recentForm: recentFormParsed
+                    }
+                };
+
+                // Disparamos el render
+                renderDashboard(mappedData);
+
+            } catch (error) {
+                console.error("Error al obtener los datos automáticos:", error);
+                
+                // Mostrar datos offline si falla la conexión en lugar de romperse la UI
+                const fallbackData = {
+                    name: "FC Dutti",
+                    division: "Modo Offline",
+                    members: 0,
+                    region: "Desconocida",
+                    crestUrl: "",
+                    stats: {
+                        matchesPlayed: 0, wins: 0, ties: 0, losses: 0,
+                        goalsFor: 0, goalsAgainst: 0, recentForm: []
+                    }
+                };
+                renderDashboard(fallbackData);
+                document.getElementById('club-division').classList.replace('text-fc-accent', 'text-red-500');
+                document.getElementById('club-form').innerHTML = '<span class="text-sm text-fc-muted text-red-400">Error de conexión</span>';
+            }
+        }
+
+        // Ejecutar el sistema en cuanto cargue la página
+        document.addEventListener('DOMContentLoaded', () => {
+            loadClubData();
+        });
+
+    </script>
+</body>
+</html>
