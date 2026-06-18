@@ -183,13 +183,17 @@
             </div>
 
             <!-- JUGADORES DESTACADOS -->
-            <h2 class="text-xl md:text-2xl font-bold mt-10 mb-6 flex items-center gap-2">
-                <i class="fa-solid fa-medal text-yellow-500"></i> Jugadores Destacados
-            </h2>
+            <div class="flex items-center justify-between mt-10 mb-6">
+                <h2 class="text-xl md:text-2xl font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-medal text-yellow-500"></i> Jugadores Destacados
+                </h2>
+                <span class="text-xs text-fc-muted"><i class="fa-solid fa-hand-pointer mr-1"></i> Pulsa para ver Top 3</span>
+            </div>
+            
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-10">
                 
                 <!-- MVP de FC Dutti -->
-                <div class="glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-transform hover:-translate-y-1 hover:border-pink-500 relative overflow-hidden group">
+                <button onclick="showTop3Modal('mvp')" class="w-full text-left glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-all hover:-translate-y-1 hover:border-pink-500 hover:bg-white/5 cursor-pointer relative overflow-hidden group">
                     <div class="absolute -right-4 -top-4 w-16 h-16 bg-pink-500 opacity-20 rounded-full blur-xl group-hover:opacity-40 transition-opacity"></div>
                     <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center mb-3 border border-pink-500/50 shadow-[0_0_10px_rgba(236,72,153,0.3)]">
                         <i class="fa-solid fa-star text-pink-500"></i>
@@ -197,57 +201,57 @@
                     <span id="top-mvp-name" class="font-bold text-white text-sm md:text-base mb-1 truncate w-full">Cargando...</span>
                     <span id="top-mvp-val" class="text-2xl md:text-3xl font-black text-pink-500 mb-1">0 pts</span>
                     <span class="text-[10px] md:text-xs text-fc-muted uppercase tracking-wider font-semibold">Jugador MVP</span>
-                </div>
+                </button>
 
                 <!-- Goles por Partido -->
-                <div class="glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-transform hover:-translate-y-1 hover:border-fc-accent">
+                <button onclick="showTop3Modal('goals')" class="w-full text-left glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-all hover:-translate-y-1 hover:border-fc-accent hover:bg-white/5 cursor-pointer">
                     <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center mb-3 border border-fc-border">
                         <i class="fa-solid fa-bullseye text-fc-accent"></i>
                     </div>
                     <span id="top-goal-name" class="font-bold text-white text-sm md:text-base mb-1 truncate w-full">Cargando...</span>
                     <span id="top-goal-val" class="text-2xl md:text-3xl font-black text-fc-accent mb-1">0.0</span>
                     <span class="text-[10px] md:text-xs text-fc-muted uppercase tracking-wider font-semibold">Goles / Partido</span>
-                </div>
+                </button>
 
                 <!-- Más Asistencias -->
-                <div class="glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-transform hover:-translate-y-1 hover:border-purple-500">
+                <button onclick="showTop3Modal('assists')" class="w-full text-left glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-all hover:-translate-y-1 hover:border-purple-500 hover:bg-white/5 cursor-pointer">
                     <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center mb-3 border border-fc-border">
                         <i class="fa-solid fa-hands-helping text-purple-400"></i>
                     </div>
                     <span id="top-assist-name" class="font-bold text-white text-sm md:text-base mb-1 truncate w-full">Cargando...</span>
                     <span id="top-assist-val" class="text-2xl md:text-3xl font-black text-purple-400 mb-1">0</span>
                     <span class="text-[10px] md:text-xs text-fc-muted uppercase tracking-wider font-semibold">Más Asistencias</span>
-                </div>
+                </button>
 
                 <!-- Mejor % Entradas (Tackles) -->
-                <div class="glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-transform hover:-translate-y-1 hover:border-orange-500">
+                <button onclick="showTop3Modal('tackles')" class="w-full text-left glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-all hover:-translate-y-1 hover:border-orange-500 hover:bg-white/5 cursor-pointer">
                     <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center mb-3 border border-fc-border">
                         <i class="fa-solid fa-shield-halved text-orange-400"></i>
                     </div>
                     <span id="top-tackle-name" class="font-bold text-white text-sm md:text-base mb-1 truncate w-full">Cargando...</span>
                     <span id="top-tackle-val" class="text-2xl md:text-3xl font-black text-orange-400 mb-1">0%</span>
                     <span class="text-[10px] md:text-xs text-fc-muted uppercase tracking-wider font-semibold">Mejor % Entradas</span>
-                </div>
+                </button>
 
                 <!-- Mejor % Pases -->
-                <div class="glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-transform hover:-translate-y-1 hover:border-blue-500">
+                <button onclick="showTop3Modal('passes')" class="w-full text-left glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-all hover:-translate-y-1 hover:border-blue-500 hover:bg-white/5 cursor-pointer">
                     <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center mb-3 border border-fc-border">
                         <i class="fa-solid fa-shoe-prints text-blue-400"></i>
                     </div>
                     <span id="top-pass-name" class="font-bold text-white text-sm md:text-base mb-1 truncate w-full">Cargando...</span>
                     <span id="top-pass-val" class="text-2xl md:text-3xl font-black text-blue-400 mb-1">0%</span>
                     <span class="text-[10px] md:text-xs text-fc-muted uppercase tracking-wider font-semibold">Mejor % Pases</span>
-                </div>
+                </button>
 
                 <!-- Mejor % Victorias -->
-                <div class="glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-transform hover:-translate-y-1 hover:border-yellow-500">
+                <button onclick="showTop3Modal('winRate')" class="w-full text-left glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-all hover:-translate-y-1 hover:border-yellow-500 hover:bg-white/5 cursor-pointer">
                     <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center mb-3 border border-fc-border">
                         <i class="fa-solid fa-crown text-yellow-500"></i>
                     </div>
                     <span id="top-win-name" class="font-bold text-white text-sm md:text-base mb-1 truncate w-full">Cargando...</span>
                     <span id="top-win-val" class="text-2xl md:text-3xl font-black text-yellow-500 mb-1">0%</span>
                     <span class="text-[10px] md:text-xs text-fc-muted uppercase tracking-wider font-semibold">Mejor % Victorias</span>
-                </div>
+                </button>
 
             </div>
         </div>
@@ -284,6 +288,25 @@
         </div>
 
     </main>
+
+    <!-- MODAL TOP 3 -->
+    <div id="top3-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] hidden flex-col justify-center items-center p-4 opacity-0 transition-opacity duration-300">
+        <div id="top3-card" class="glass-card rounded-2xl p-6 w-full max-w-sm flex flex-col border-fc-accent/50 shadow-[0_0_30px_rgba(0,0,0,0.5)] relative overflow-hidden transform scale-95 transition-transform duration-300">
+            <button onclick="closeTop3Modal()" class="absolute top-4 right-4 text-fc-muted hover:text-white z-10 p-2"><i class="fa-solid fa-xmark text-2xl"></i></button>
+            
+            <div class="flex flex-col items-center mb-6 relative z-10">
+                <div id="top3-icon" class="w-16 h-16 rounded-full bg-gray-800 flex items-center justify-center mb-3 border border-fc-border text-2xl">
+                    <!-- Icon inyectado por JS -->
+                </div>
+                <h2 id="top3-title" class="text-xl font-black text-white text-center">Top 3</h2>
+                <p id="top3-subtitle" class="text-xs text-fc-muted uppercase tracking-wider font-semibold">Categoría</p>
+            </div>
+            
+            <div id="top3-list" class="flex flex-col gap-3 relative z-10">
+                <!-- Lista inyectada por JS -->
+            </div>
+        </div>
+    </div>
 
     <!-- MODAL DE AJUSTES / LECTOR IA -->
     <div id="settings-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden flex-col justify-center items-center p-4">
@@ -328,7 +351,7 @@
         // API KEY de Gemini.
         const apiKey = ""; 
 
-        // DATOS EXTRAÍDOS DE LAS NUEVAS CAPTURAS (ACTUALIZADOS)
+        // DATOS EXTRAÍDOS
         const defaultFcDuttiData = {
             stats: { 
                 division: 2,
@@ -360,10 +383,8 @@
             ]
         };
 
-        // Cargar datos locales de la caché (si existen)
         let appData = localStorage.getItem('fcDuttiDataLocal') ? JSON.parse(localStorage.getItem('fcDuttiDataLocal')) : defaultFcDuttiData;
         
-        // Auto-actualizador
         if (defaultFcDuttiData.stats.matchesPlayed > (appData.stats.matchesPlayed || 0)) {
             appData = defaultFcDuttiData;
             localStorage.setItem('fcDuttiDataLocal', JSON.stringify(appData));
@@ -459,7 +480,6 @@
                         const extractedData = JSON.parse(textResponse);
                         let currentData = JSON.parse(document.getElementById('json-editor').value);
                         
-                        // Fusión inteligente
                         if (extractedData.stats && Object.keys(extractedData.stats).length > 0) {
                             currentData.stats = { ...currentData.stats, ...extractedData.stats };
                         }
@@ -486,12 +506,12 @@
                 };
             } catch (error) {
                 status.className = 'text-xs font-bold mt-2 text-center text-red-500';
-                status.textContent = 'Error de conexión con la IA. ' + (apiKey === "" ? "La clave API no está configurada." : "Revisa la imagen e inténtalo de nuevo.");
+                status.textContent = 'Error de conexión con la IA. Revisa la imagen e inténtalo de nuevo.';
                 console.error(error);
             } finally {
                 btn.disabled = false;
                 btn.classList.remove('opacity-50', 'cursor-not-allowed');
-                event.target.value = ''; // Reset file input
+                event.target.value = '';
             }
         }
 
@@ -508,7 +528,108 @@
             activeBtn.classList.add('border-fc-accent', 'text-fc-accent');
         }
 
-        // --- RENDERIZADO DE DATOS ---
+        // --- ALGORITMO MVP ---
+        const calculateMVPScore = (m) => {
+            if (m.games === 0) return 0;
+            return ((m.goals * 50) + (m.assists * 30) + (m.tackles * 10) + m.passes) / m.games;
+        };
+
+        // --- LOGICA MODAL TOP 3 ---
+        function showTop3Modal(category) {
+            const members = appData.members;
+            let sorted = [];
+            let title = "", subtitle = "", iconHtml = "", colorClass = "";
+            let formatVal = (val) => val;
+
+            switch(category) {
+                case 'mvp':
+                    sorted = [...members].sort((a, b) => calculateMVPScore(b) - calculateMVPScore(a));
+                    title = "Jugador MVP"; subtitle = "Rendimiento Absoluto";
+                    iconHtml = '<i class="fa-solid fa-star text-pink-500"></i>'; colorClass = 'border-pink-500/50';
+                    formatVal = (m) => calculateMVPScore(m).toFixed(0) + ' pts';
+                    break;
+                case 'goals':
+                    sorted = [...members].filter(m => m.games > 0).sort((a, b) => (b.goals/b.games) - (a.goals/a.games));
+                    title = "Goles por Partido"; subtitle = "Promedio Goleador";
+                    iconHtml = '<i class="fa-solid fa-bullseye text-fc-accent"></i>'; colorClass = 'border-fc-accent/50';
+                    formatVal = (m) => (m.goals/m.games).toFixed(2);
+                    break;
+                case 'assists':
+                    sorted = [...members].sort((a, b) => b.assists - a.assists);
+                    title = "Más Asistencias"; subtitle = "Asistencias Totales";
+                    iconHtml = '<i class="fa-solid fa-hands-helping text-purple-400"></i>'; colorClass = 'border-purple-500/50';
+                    formatVal = (m) => m.assists;
+                    break;
+                case 'tackles':
+                    sorted = [...members].sort((a, b) => b.tackleRate - a.tackleRate);
+                    title = "Mejor % Entradas"; subtitle = "Efectividad Defensiva";
+                    iconHtml = '<i class="fa-solid fa-shield-halved text-orange-400"></i>'; colorClass = 'border-orange-500/50';
+                    formatVal = (m) => m.tackleRate + '%';
+                    break;
+                case 'passes':
+                    sorted = [...members].sort((a, b) => b.passRate - a.passRate);
+                    title = "Mejor % Pases"; subtitle = "Precisión de Pase";
+                    iconHtml = '<i class="fa-solid fa-shoe-prints text-blue-400"></i>'; colorClass = 'border-blue-500/50';
+                    formatVal = (m) => m.passRate + '%';
+                    break;
+                case 'winRate':
+                    sorted = [...members].sort((a, b) => b.winPct - a.winPct);
+                    title = "Mejor % Victorias"; subtitle = "Ratio de Victorias";
+                    iconHtml = '<i class="fa-solid fa-crown text-yellow-500"></i>'; colorClass = 'border-yellow-500/50';
+                    formatVal = (m) => m.winPct + '%';
+                    break;
+            }
+
+            // Top 3 de los jugadores
+            const top3 = sorted.slice(0, 3);
+            
+            document.getElementById('top3-title').textContent = title;
+            document.getElementById('top3-subtitle').textContent = subtitle;
+            document.getElementById('top3-icon').innerHTML = iconHtml;
+            
+            const modalBox = document.getElementById('top3-card');
+            modalBox.className = `glass-card rounded-2xl p-6 w-full max-w-sm flex flex-col ${colorClass} shadow-[0_0_30px_rgba(0,0,0,0.5)] relative overflow-hidden transform scale-100 transition-transform duration-300`;
+
+            const listContainer = document.getElementById('top3-list');
+            listContainer.innerHTML = '';
+
+            const medals = ['🥇', '🥈', '🥉'];
+            const medalColors = ['text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.6)]', 'text-gray-300 drop-shadow-[0_0_8px_rgba(209,213,219,0.5)]', 'text-amber-600 drop-shadow-[0_0_8px_rgba(217,119,6,0.5)]'];
+
+            top3.forEach((player, index) => {
+                const div = document.createElement('div');
+                div.className = "flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10";
+                div.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="text-3xl ${medalColors[index]}">${medals[index]}</div>
+                        <div>
+                            <div class="font-bold text-white text-sm md:text-base truncate w-32 md:w-40">${player.name || '-'}</div>
+                            <div class="text-[10px] text-fc-muted">${player.pos || '-'}</div>
+                        </div>
+                    </div>
+                    <div class="font-black text-lg ${medalColors[index].split(' ')[0]}">${formatVal(player)}</div>
+                `;
+                listContainer.appendChild(div);
+            });
+
+            const modalBg = document.getElementById('top3-modal');
+            modalBg.classList.remove('hidden');
+            modalBg.classList.add('flex');
+            setTimeout(() => {
+                modalBg.classList.remove('opacity-0');
+            }, 10);
+        }
+
+        function closeTop3Modal() {
+            const modalBg = document.getElementById('top3-modal');
+            modalBg.classList.add('opacity-0');
+            setTimeout(() => {
+                modalBg.classList.add('hidden');
+                modalBg.classList.remove('flex');
+            }, 300);
+        }
+
+        // --- RENDERIZADO DE DATOS PRINCIPALES ---
         function renderData() {
             const formContainer = document.getElementById('club-form');
             formContainer.innerHTML = '';
@@ -520,6 +641,10 @@
                 formContainer.appendChild(span);
             });
 
+            if (appData.stats.division) {
+                document.getElementById('club-division').textContent = 'División ' + appData.stats.division;
+            }
+
             document.getElementById('stat-matches').textContent = appData.stats.matchesPlayed;
             document.getElementById('stat-wins').textContent = appData.stats.wins;
             document.getElementById('stat-ties').textContent = appData.stats.ties;
@@ -529,19 +654,13 @@
             document.getElementById('stat-winrate').textContent = (appData.stats.winRate || 0) + '%';
             document.getElementById('winrate-circle').setAttribute('stroke-dasharray', `${appData.stats.winRate || 0}, 100`);
 
-            if (appData.stats.division) {
-                document.getElementById('club-division').textContent = 'División ' + appData.stats.division;
-            }
-
             const members = appData.members;
             if(members.length > 0) {
-                
-                // 1. Mejor % de Pases
+                // Actualizar tarjetas principales visuales
                 const topPass = members.reduce((p, c) => (p.passRate > c.passRate) ? p : c);
                 document.getElementById('top-pass-name').textContent = topPass.name;
                 document.getElementById('top-pass-val').textContent = topPass.passRate + '%';
 
-                // 2. Goles por partido
                 const validScorers = members.filter(m => m.games > 0);
                 if(validScorers.length > 0) {
                     const topGoalRatio = validScorers.reduce((p, c) => ((p.goals / p.games) > (c.goals / c.games)) ? p : c);
@@ -549,27 +668,17 @@
                     document.getElementById('top-goal-val').textContent = (topGoalRatio.goals / topGoalRatio.games).toFixed(2);
                 }
 
-                // 3. Más Asistencias
                 const topAssists = members.reduce((p, c) => (p.assists > c.assists) ? p : c);
                 document.getElementById('top-assist-name').textContent = topAssists.name;
                 document.getElementById('top-assist-val').textContent = topAssists.assists;
 
-                // 4. Mejor % Victorias
                 const topWin = members.reduce((p, c) => (p.winPct > c.winPct) ? p : c);
                 document.getElementById('top-win-name').textContent = topWin.name;
                 document.getElementById('top-win-val').textContent = topWin.winPct + '%';
 
-                // 5. Mejor % Entradas (Tackle Rate)
                 const topTackles = members.reduce((p, c) => (p.tackleRate > c.tackleRate) ? p : c);
                 document.getElementById('top-tackle-name').textContent = topTackles.name;
                 document.getElementById('top-tackle-val').textContent = topTackles.tackleRate + '%';
-
-                // 6. CÁLCULO DEL MVP (Rendimiento Absoluto)
-                // Fórmula: (Goles*50 + Asistencias*30 + Entradas*10 + Pases) / Partidos Jugados
-                const calculateMVPScore = (m) => {
-                    if (m.games === 0) return 0;
-                    return ((m.goals * 50) + (m.assists * 30) + (m.tackles * 10) + m.passes) / m.games;
-                };
 
                 const topMVP = members.reduce((p, c) => (calculateMVPScore(p) > calculateMVPScore(c)) ? p : c);
                 document.getElementById('top-mvp-name').textContent = topMVP.name;
