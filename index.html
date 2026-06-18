@@ -15,7 +15,6 @@
     <!-- Truco del script invisible para forzar el icono en iOS -->
     <script>
         if (window.navigator.standalone === false || /iPhone|iPad|iPod/.test(navigator.userAgent)) {
-            // Se inyecta dinámicamente para saltarse la caché estricta de Safari
             const link = document.createElement('link');
             link.rel = 'apple-touch-icon';
             link.href = 'https://raw.githubusercontent.com/AVS-PROJECTS33/FC-DUTTI/main/Sin%20t%C3%ADtulo.png?v=' + new Date().getTime(); 
@@ -34,17 +33,11 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
                         fc: {
-                            dark: '#0a0a0a',
-                            card: '#171717',
-                            border: '#262626',
-                            accent: '#00ff66', 
-                            text: '#f5f5f5',
-                            muted: '#a3a3a3'
+                            dark: '#0a0a0a', card: '#171717', border: '#262626',
+                            accent: '#00ff66', text: '#f5f5f5', muted: '#a3a3a3'
                         }
                     }
                 }
@@ -52,24 +45,13 @@
         }
     </script>
     <style>
-        body {
-            background-color: #0a0a0a;
-            color: #f5f5f5;
-        }
-        .glass-card {
-            background: rgba(23, 23, 23, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid #262626;
-        }
+        body { background-color: #0a0a0a; color: #f5f5f5; }
+        .glass-card { background: rgba(23, 23, 23, 0.7); backdrop-filter: blur(10px); border: 1px solid #262626; }
         .form-w { color: #00ff66; font-weight: bold; }
         .form-d { color: #fbbf24; font-weight: bold; }
         .form-l { color: #ef4444; font-weight: bold; }
-        
-        /* Ocultar pestañas no activas */
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-
-        /* Utilidad para ocultar barras de desplazamiento en móvil */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
@@ -83,12 +65,11 @@
                 <i class="fa-solid fa-gamepad text-fc-accent text-2xl"></i>
                 <span class="font-bold text-xl tracking-tight">FC Tracker</span>
             </div>
-            <a href="https://www.ea.com/games/ea-sports-fc/clubs/overview?clubId=6565028&platform=common-gen5" target="_blank" rel="noopener noreferrer" class="text-sm text-fc-muted hover:text-white transition-colors">
-                <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Ver Oficial
-            </a>
-            <button onclick="openSettings()" class="ml-3 md:ml-4 text-fc-muted hover:text-white transition-colors" title="Actualizar Datos">
-                <i class="fa-solid fa-gear text-xl md:text-2xl"></i>
-            </button>
+            <div class="flex items-center">
+                <button onclick="openSettings()" class="text-fc-muted hover:text-white transition-colors bg-fc-dark p-2 rounded-lg border border-fc-border flex items-center gap-2" title="Ajustes de Datos">
+                    <i class="fa-solid fa-gear text-lg"></i> <span class="text-xs font-bold hidden md:inline">Panel de Datos</span>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -97,18 +78,15 @@
         
         <!-- Header del Club -->
         <header class="glass-card rounded-2xl p-4 md:p-10 mb-6 md:mb-8 relative overflow-hidden flex flex-col md:flex-row items-center gap-4 md:gap-10">
-            <!-- Background Decoration -->
             <div class="absolute -right-20 -top-20 w-64 h-64 bg-fc-accent opacity-10 rounded-full blur-3xl"></div>
             
             <div class="w-32 h-32 md:w-40 md:h-40 rounded-full border-[3px] border-fc-accent overflow-hidden flex-shrink-0 bg-gray-100 flex items-center justify-center relative shadow-[0_0_20px_rgba(0,255,102,0.3)]">
-                <!-- Escudo de GitHub -->
                 <img src="https://raw.githubusercontent.com/AVS-PROJECTS33/FC-DUTTI/main/Sin%20t%C3%ADtulo.png" alt="FC Dutti Escudo" class="w-full h-full p-2 md:p-3 object-contain object-center transform scale-110 relative z-10 drop-shadow-md">
             </div>
             
             <div class="text-center md:text-left flex-1 relative z-10 w-full">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-fc-dark border border-fc-border text-[10px] md:text-xs font-semibold text-fc-accent mb-2">
-                    <i class="fa-solid fa-trophy"></i>
-                    <span id="club-division">Hometown Heroes</span>
+                    <i class="fa-solid fa-trophy"></i> <span id="club-division">Hometown Heroes</span>
                 </div>
                 <h1 id="club-name" class="text-3xl md:text-5xl font-black mb-2 tracking-tight">FC Dutti</h1>
                 <p class="text-fc-muted flex flex-wrap items-center justify-center md:justify-start gap-1 md:gap-2 text-xs md:text-base">
@@ -120,12 +98,9 @@
                 </p>
             </div>
 
-            <!-- Forma Reciente -->
             <div class="bg-fc-dark rounded-xl p-3 md:p-4 border border-fc-border flex flex-col items-center md:items-end w-full md:w-auto relative z-10">
                 <span class="text-xs md:text-sm text-fc-muted mb-2 uppercase tracking-wider font-semibold">Forma Reciente</span>
-                <div id="club-form" class="flex gap-2 text-base md:text-lg">
-                    <!-- Se inyectará vía JS -->
-                </div>
+                <div id="club-form" class="flex gap-2 text-base md:text-lg"></div>
             </div>
         </header>
 
@@ -145,25 +120,21 @@
         <!-- CONTENIDO: PESTAÑA RESUMEN -->
         <div id="tab-overview" class="tab-content active">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-10">
-                <!-- Partidos -->
                 <div class="glass-card rounded-xl p-6 flex flex-col justify-center items-center text-center transition-transform hover:-translate-y-1 hover:border-fc-accent">
                     <i class="fa-solid fa-futbol text-2xl text-fc-muted mb-3"></i>
                     <span id="stat-matches" class="text-4xl font-black mb-1">0</span>
                     <span class="text-sm text-fc-muted uppercase tracking-wider">Partidos</span>
                 </div>
-                <!-- Victorias -->
                 <div class="glass-card rounded-xl p-6 flex flex-col justify-center items-center text-center transition-transform hover:-translate-y-1 hover:border-green-500">
                     <i class="fa-solid fa-check text-2xl text-green-500 mb-3"></i>
                     <span id="stat-wins" class="text-4xl font-black mb-1 text-green-500">0</span>
                     <span class="text-sm text-fc-muted uppercase tracking-wider">Victorias</span>
                 </div>
-                <!-- Empates -->
                 <div class="glass-card rounded-xl p-6 flex flex-col justify-center items-center text-center transition-transform hover:-translate-y-1 hover:border-yellow-500">
                     <i class="fa-solid fa-minus text-2xl text-yellow-500 mb-3"></i>
                     <span id="stat-ties" class="text-4xl font-black mb-1 text-yellow-500">0</span>
                     <span class="text-sm text-fc-muted uppercase tracking-wider">Empates</span>
                 </div>
-                <!-- Derrotas -->
                 <div class="glass-card rounded-xl p-6 flex flex-col justify-center items-center text-center transition-transform hover:-translate-y-1 hover:border-red-500">
                     <i class="fa-solid fa-xmark text-2xl text-red-500 mb-3"></i>
                     <span id="stat-losses" class="text-4xl font-black mb-1 text-red-500">0</span>
@@ -171,9 +142,7 @@
                 </div>
             </div>
 
-            <!-- Estadísticas de Goles & Ratio -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                <!-- Win Rate -->
                 <div class="glass-card rounded-xl p-6 flex items-center justify-between">
                     <div>
                         <h3 class="text-fc-muted text-sm uppercase tracking-wider font-semibold mb-1">Victorias</h3>
@@ -189,7 +158,6 @@
                         <i class="fa-solid fa-percent text-sm text-fc-muted"></i>
                     </div>
                 </div>
-                <!-- Goles a Favor -->
                 <div class="glass-card rounded-xl p-6 flex items-center gap-4">
                     <div class="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-500">
                         <i class="fa-solid fa-arrow-up text-xl"></i>
@@ -201,7 +169,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- Goles en Contra -->
                 <div class="glass-card rounded-xl p-6 flex items-center gap-4">
                     <div class="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center text-red-500">
                         <i class="fa-solid fa-arrow-down text-xl"></i>
@@ -215,13 +182,11 @@
                 </div>
             </div>
 
-            <!-- NUEVA SECCIÓN: JUGADORES DESTACADOS -->
+            <!-- JUGADORES DESTACADOS -->
             <h2 class="text-xl md:text-2xl font-bold mt-10 mb-6 flex items-center gap-2">
                 <i class="fa-solid fa-medal text-yellow-500"></i> Jugadores Destacados
             </h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-10">
-                
-                <!-- Mejor % Pases -->
                 <div class="glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-transform hover:-translate-y-1 hover:border-blue-500">
                     <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center mb-3 border border-fc-border">
                         <i class="fa-solid fa-shoe-prints text-blue-400"></i>
@@ -230,8 +195,6 @@
                     <span id="top-pass-val" class="text-2xl md:text-3xl font-black text-blue-400 mb-1">0%</span>
                     <span class="text-[10px] md:text-xs text-fc-muted uppercase tracking-wider font-semibold">Mejor % Pases</span>
                 </div>
-
-                <!-- Mejor Ratio Goles -->
                 <div class="glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-transform hover:-translate-y-1 hover:border-fc-accent">
                     <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center mb-3 border border-fc-border">
                         <i class="fa-solid fa-bullseye text-fc-accent"></i>
@@ -240,8 +203,6 @@
                     <span id="top-goal-val" class="text-2xl md:text-3xl font-black text-fc-accent mb-1">0.0</span>
                     <span class="text-[10px] md:text-xs text-fc-muted uppercase tracking-wider font-semibold">Goles / Partido</span>
                 </div>
-
-                <!-- Más Asistencias -->
                 <div class="glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-transform hover:-translate-y-1 hover:border-purple-500">
                     <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center mb-3 border border-fc-border">
                         <i class="fa-solid fa-hands-helping text-purple-400"></i>
@@ -250,8 +211,6 @@
                     <span id="top-assist-val" class="text-2xl md:text-3xl font-black text-purple-400 mb-1">0</span>
                     <span class="text-[10px] md:text-xs text-fc-muted uppercase tracking-wider font-semibold">Más Asistencias</span>
                 </div>
-
-                <!-- Mejor % Victorias -->
                 <div class="glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-transform hover:-translate-y-1 hover:border-yellow-500">
                     <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center mb-3 border border-fc-border">
                         <i class="fa-solid fa-crown text-yellow-500"></i>
@@ -260,7 +219,6 @@
                     <span id="top-win-val" class="text-2xl md:text-3xl font-black text-yellow-500 mb-1">0%</span>
                     <span class="text-[10px] md:text-xs text-fc-muted uppercase tracking-wider font-semibold">Mejor % Victorias</span>
                 </div>
-
             </div>
         </div>
 
@@ -280,13 +238,11 @@
                                 <th class="p-3 md:p-4 font-bold text-center">% Pases</th>
                                 <th class="p-3 md:p-4 font-bold text-center">Entradas</th>
                                 <th class="p-3 md:p-4 font-bold text-center">% Entradas</th>
-                                <th class="p-3 md:p-4 font-bold text-center">Porterías a Cero</th>
+                                <th class="p-3 md:p-4 font-bold text-center">Port. Cero</th>
                                 <th class="p-3 md:p-4 font-bold text-center">% Victorias</th>
                             </tr>
                         </thead>
-                        <tbody id="members-table-body" class="divide-y divide-fc-border">
-                            <!-- Inyectado por JS -->
-                        </tbody>
+                        <tbody id="members-table-body" class="divide-y divide-fc-border"></tbody>
                     </table>
                 </div>
             </div>
@@ -294,29 +250,37 @@
 
         <!-- CONTENIDO: PESTAÑA ÚLTIMOS PARTIDOS -->
         <div id="tab-matches" class="tab-content">
-            <div id="matches-container" class="flex flex-col gap-4">
-                <!-- Inyectado por JS -->
-            </div>
+            <div id="matches-container" class="flex flex-col gap-4"></div>
         </div>
 
     </main>
 
-    <!-- MODAL DE AJUSTES / EDITOR JSON -->
+    <!-- MODAL DE AJUSTES / LECTOR IA -->
     <div id="settings-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden flex-col justify-center items-center p-4">
-        <div class="glass-card rounded-2xl p-4 md:p-6 w-full max-w-2xl max-h-[90vh] flex flex-col border-fc-accent/50 shadow-[0_0_30px_rgba(0,255,102,0.15)]">
+        <div class="glass-card rounded-2xl p-4 md:p-6 w-full max-w-2xl max-h-[90vh] flex flex-col border-fc-accent/50 shadow-[0_0_30px_rgba(0,255,102,0.15)] overflow-hidden">
+            
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-lg md:text-xl font-bold flex items-center gap-2 text-white">
                     <i class="fa-solid fa-database text-fc-accent"></i> Base de Datos Local
                 </h2>
-                <button onclick="closeSettings()" class="text-fc-muted hover:text-white">
-                    <i class="fa-solid fa-xmark text-2xl"></i>
-                </button>
+                <button onclick="closeSettings()" class="text-fc-muted hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></button>
             </div>
-            <p class="text-xs text-fc-muted mb-4">
-                Aquí puedes pegar un log JSON o editar directamente los números. Al guardar, se quedará almacenado en la memoria de este dispositivo (teléfono o PC).
-            </p>
-            <textarea id="json-editor" class="w-full flex-1 bg-[#0a0a0a] border border-fc-border rounded-lg p-3 text-xs md:text-sm font-mono text-green-400 focus:outline-none focus:border-fc-accent resize-none min-h-[50vh] overflow-y-auto"></textarea>
+
+            <!-- BOTÓN DE INTELIGENCIA ARTIFICIAL -->
+            <div class="mb-4 bg-purple-900/20 p-4 rounded-lg border border-purple-500/50">
+                <h3 class="font-bold text-white mb-1"><i class="fa-solid fa-wand-magic-sparkles text-purple-400"></i> Escáner IA de Capturas</h3>
+                <p class="text-xs text-gray-300 mb-3">Sube una foto de las estadísticas de EA y la IA leerá los números por ti para actualizar la tabla de abajo.</p>
+                <input type="file" id="image-upload" accept="image/*" class="hidden" onchange="processImageWithAI(event)">
+                <button onclick="document.getElementById('image-upload').click()" id="ai-btn" class="w-full px-4 py-2 rounded-lg font-bold text-sm bg-purple-600 hover:bg-purple-500 text-white transition-colors flex justify-center items-center gap-2">
+                    <i class="fa-solid fa-camera"></i> Subir Captura
+                </button>
+                <p id="ai-status" class="text-xs font-bold mt-2 text-center hidden"></p>
+            </div>
+
+            <p class="text-xs text-fc-muted mb-2">Editor JSON Manual:</p>
+            <textarea id="json-editor" class="w-full flex-1 bg-[#0a0a0a] border border-fc-border rounded-lg p-3 text-xs md:text-sm font-mono text-green-400 focus:outline-none focus:border-fc-accent resize-none min-h-[30vh] overflow-y-auto"></textarea>
             <div id="settings-error" class="text-red-500 text-xs font-bold mt-2 hidden">Error de formato. Asegúrate de no haber borrado comas o comillas por error.</div>
+            
             <div class="flex justify-end gap-3 mt-4">
                 <button onclick="closeSettings()" class="px-4 py-2 rounded-lg font-bold text-sm bg-gray-800 hover:bg-gray-700 text-white transition-colors">Cancelar</button>
                 <button onclick="saveSettings()" class="px-4 py-2 rounded-lg font-bold text-sm bg-fc-accent text-black hover:bg-green-400 transition-colors">Guardar Cambios</button>
@@ -326,23 +290,17 @@
 
     <!-- Footer -->
     <footer class="border-t border-fc-border py-8 text-center text-fc-muted text-sm mt-10">
-        <p>Dashboard personalizado de FC Dutti basado en las estadísticas proporcionadas.</p>
+        <p>Dashboard FC Dutti. Potenciado con IA.</p>
     </footer>
 
     <!-- Lógica de la Aplicación -->
     <script>
-        // DATOS EXTRAÍDOS DE TUS CAPTURAS (Datos Estáticos Originales)
+        // API KEY de Gemini.
+        const apiKey = ""; 
+
+        // DATOS EXTRAÍDOS DE TUS CAPTURAS INICIALES
         const defaultFcDuttiData = {
-            stats: {
-                matchesPlayed: 71,
-                wins: 28,
-                ties: 7,
-                losses: 36,
-                goalsFor: 116,
-                goalsAgainst: 154,
-                winRate: 39.44, // Extraído de la gráfica de pastel
-                recentForm: ['L', 'L', 'L', 'W', 'W'] // Basado en el historial
-            },
+            stats: { matchesPlayed: 71, wins: 28, ties: 7, losses: 36, goalsFor: 116, goalsAgainst: 154, winRate: 39.44, recentForm: ['L', 'L', 'L', 'W', 'W'] },
             members: [
                 { name: "danyskaywalker", pos: "Centrocampista", ovr: 79, games: 5, goals: 1, passes: 82, passRate: 85, assists: 3, tackles: 7, tackleRate: 14, cleanSheets: 0, winPct: 20 },
                 { name: "DAVILICO_86", pos: "Centrocampista", ovr: 73, games: 7, goals: 0, passes: 69, passRate: 65, assists: 2, tackles: 1, tackleRate: 10, cleanSheets: 0, winPct: 14 },
@@ -362,24 +320,143 @@
             ]
         };
 
-        // Inicializar datos desde localStorage (memoria del móvil) o usar los por defecto
-        let appData = localStorage.getItem('fcDuttiDataLocal') 
-            ? JSON.parse(localStorage.getItem('fcDuttiDataLocal')) 
-            : defaultFcDuttiData;
+        let appData = localStorage.getItem('fcDuttiDataLocal') ? JSON.parse(localStorage.getItem('fcDuttiDataLocal')) : defaultFcDuttiData;
+
+        // --- FUNCIONES IA Y FETCH ---
+        async function fetchWithRetry(url, options, retries = 5) {
+            const delays = [1000, 2000, 4000, 8000, 16000];
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    return await response.json();
+                } catch (err) {
+                    if (i === retries - 1) throw err;
+                    await new Promise(res => setTimeout(res, delays[i]));
+                }
+            }
+        }
+
+        async function processImageWithAI(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const btn = document.getElementById('ai-btn');
+            const status = document.getElementById('ai-status');
+            
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            status.classList.remove('hidden');
+            status.className = 'text-xs font-bold mt-2 text-center text-yellow-400';
+            status.textContent = 'Analizando imagen con IA... (puede tardar unos 10 segundos)';
+
+            try {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = async () => {
+                    const base64Image = reader.result.split(',')[1];
+                    const mimeType = file.type;
+
+                    const payload = {
+                        contents: [{
+                            role: "user",
+                            parts: [
+                                { text: "Extract EA Sports FC club statistics from this image. Return valid JSON only. If it's club overall stats, populate 'stats'. If it's a list of players, populate 'members'. If it's match history, ignore it for now. Translate positions to Spanish ('Forward'->'Delantero', 'Midfielder'->'Centrocampista', 'Defender'->'Defensa', 'Goalkeeper'->'Portero'). Extract numbers precisely." },
+                                { inlineData: { mimeType: mimeType, data: base64Image } }
+                            ]
+                        }],
+                        generationConfig: {
+                            responseMimeType: "application/json",
+                            responseSchema: {
+                                type: "OBJECT",
+                                properties: {
+                                    stats: {
+                                        type: "OBJECT",
+                                        properties: {
+                                            matchesPlayed: { type: "INTEGER" }, wins: { type: "INTEGER" },
+                                            ties: { type: "INTEGER" }, losses: { type: "INTEGER" },
+                                            goalsFor: { type: "INTEGER" }, goalsAgainst: { type: "INTEGER" },
+                                            winRate: { type: "NUMBER" }
+                                        }
+                                    },
+                                    members: {
+                                        type: "ARRAY",
+                                        items: {
+                                            type: "OBJECT",
+                                            properties: {
+                                                name: { type: "STRING" }, pos: { type: "STRING" },
+                                                ovr: { type: "INTEGER" }, games: { type: "INTEGER" },
+                                                goals: { type: "INTEGER" }, assists: { type: "INTEGER" },
+                                                passes: { type: "INTEGER" }, passRate: { type: "INTEGER" },
+                                                tackles: { type: "INTEGER" }, tackleRate: { type: "INTEGER" },
+                                                cleanSheets: { type: "INTEGER" }, winPct: { type: "INTEGER" }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    };
+
+                    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+                    
+                    const result = await fetchWithRetry(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const textResponse = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (textResponse) {
+                        const extractedData = JSON.parse(textResponse);
+                        let currentData = JSON.parse(document.getElementById('json-editor').value);
+                        
+                        // Fusión inteligente: Si hay stats generales, las actualiza
+                        if (extractedData.stats && Object.keys(extractedData.stats).length > 0) {
+                            currentData.stats = { ...currentData.stats, ...extractedData.stats };
+                        }
+                        
+                        // Fusión inteligente: Si hay miembros en la foto, busca si ya existían y actualiza solo sus números nuevos
+                        if (extractedData.members && extractedData.members.length > 0) {
+                            extractedData.members.forEach(newMember => {
+                                if(!newMember.name) return;
+                                const existingIndex = currentData.members.findIndex(m => m.name.toLowerCase() === newMember.name.toLowerCase());
+                                if (existingIndex >= 0) {
+                                    // Sobrescribe solo los datos encontrados en la foto
+                                    currentData.members[existingIndex] = { ...currentData.members[existingIndex], ...newMember };
+                                } else {
+                                    currentData.members.push(newMember);
+                                }
+                            });
+                        }
+
+                        document.getElementById('json-editor').value = JSON.stringify(currentData, null, 4);
+                        
+                        status.className = 'text-xs font-bold mt-2 text-center text-green-400';
+                        status.textContent = '¡Datos leídos! Se han añadido al código JSON. Haz clic en "Guardar Cambios".';
+                    } else {
+                        throw new Error("Respuesta vacía de la IA");
+                    }
+                };
+            } catch (error) {
+                status.className = 'text-xs font-bold mt-2 text-center text-red-500';
+                status.textContent = 'Error de conexión con la IA. ' + (apiKey === "" ? "La clave API no está configurada." : "Revisa la imagen e inténtalo de nuevo.");
+                console.error(error);
+            } finally {
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                event.target.value = ''; // Reset file input
+            }
+        }
 
         // --- SISTEMA DE PESTAÑAS ---
         function switchTab(tabId) {
-            // Ocultar todos los contenidos
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            // Resetear todos los botones
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('border-fc-accent', 'text-fc-accent');
                 btn.classList.add('border-transparent', 'text-fc-muted');
             });
-
-            // Mostrar el contenido seleccionado
             document.getElementById(`tab-${tabId}`).classList.add('active');
-            // Activar el botón seleccionado
             const activeBtn = document.getElementById(`btn-${tabId}`);
             activeBtn.classList.remove('border-transparent', 'text-fc-muted');
             activeBtn.classList.add('border-fc-accent', 'text-fc-accent');
@@ -387,7 +464,6 @@
 
         // --- RENDERIZADO DE DATOS ---
         function renderData() {
-            // Forma reciente
             const formContainer = document.getElementById('club-form');
             formContainer.innerHTML = '';
             appData.stats.recentForm.forEach(result => {
@@ -398,42 +474,37 @@
                 formContainer.appendChild(span);
             });
 
-            // Resumen Stats
             document.getElementById('stat-matches').textContent = appData.stats.matchesPlayed;
             document.getElementById('stat-wins').textContent = appData.stats.wins;
             document.getElementById('stat-ties').textContent = appData.stats.ties;
             document.getElementById('stat-losses').textContent = appData.stats.losses;
             document.getElementById('stat-goalsFor').textContent = appData.stats.goalsFor;
             document.getElementById('stat-goalsAgainst').textContent = appData.stats.goalsAgainst;
-            
-            document.getElementById('stat-winrate').textContent = appData.stats.winRate + '%';
-            document.getElementById('winrate-circle').setAttribute('stroke-dasharray', `${appData.stats.winRate}, 100`);
+            document.getElementById('stat-winrate').textContent = (appData.stats.winRate || 0) + '%';
+            document.getElementById('winrate-circle').setAttribute('stroke-dasharray', `${appData.stats.winRate || 0}, 100`);
 
-            // CALCULAR JUGADORES DESTACADOS
             const members = appData.members;
+            if(members.length > 0) {
+                const topPass = members.reduce((p, c) => (p.passRate > c.passRate) ? p : c);
+                document.getElementById('top-pass-name').textContent = topPass.name;
+                document.getElementById('top-pass-val').textContent = topPass.passRate + '%';
 
-            // 1. Mejor % de Pases
-            const topPass = members.reduce((prev, current) => (prev.passRate > current.passRate) ? prev : current);
-            document.getElementById('top-pass-name').textContent = topPass.name;
-            document.getElementById('top-pass-val').textContent = topPass.passRate + '%';
+                const validScorers = members.filter(m => m.games > 0);
+                if(validScorers.length > 0) {
+                    const topGoalRatio = validScorers.reduce((p, c) => ((p.goals / p.games) > (c.goals / c.games)) ? p : c);
+                    document.getElementById('top-goal-name').textContent = topGoalRatio.name;
+                    document.getElementById('top-goal-val').textContent = (topGoalRatio.goals / topGoalRatio.games).toFixed(2);
+                }
 
-            // 2. Mejor Ratio Goles/Partido (Filtramos los que tengan al menos 1 partido)
-            const validScorers = members.filter(m => m.games > 0);
-            const topGoalRatio = validScorers.reduce((prev, current) => ((prev.goals / prev.games) > (current.goals / current.games)) ? prev : current);
-            document.getElementById('top-goal-name').textContent = topGoalRatio.name;
-            document.getElementById('top-goal-val').textContent = (topGoalRatio.goals / topGoalRatio.games).toFixed(2);
+                const topAssists = members.reduce((p, c) => (p.assists > c.assists) ? p : c);
+                document.getElementById('top-assist-name').textContent = topAssists.name;
+                document.getElementById('top-assist-val').textContent = topAssists.assists;
 
-            // 3. Más Asistencias
-            const topAssists = members.reduce((prev, current) => (prev.assists > current.assists) ? prev : current);
-            document.getElementById('top-assist-name').textContent = topAssists.name;
-            document.getElementById('top-assist-val').textContent = topAssists.assists;
+                const topWin = members.reduce((p, c) => (p.winPct > c.winPct) ? p : c);
+                document.getElementById('top-win-name').textContent = topWin.name;
+                document.getElementById('top-win-val').textContent = topWin.winPct + '%';
+            }
 
-            // 4. Mejor % Victorias
-            const topWin = members.reduce((prev, current) => (prev.winPct > current.winPct) ? prev : current);
-            document.getElementById('top-win-name').textContent = topWin.name;
-            document.getElementById('top-win-val').textContent = topWin.winPct + '%';
-
-            // Generar Tabla de Miembros
             const membersBody = document.getElementById('members-table-body');
             membersBody.innerHTML = '';
             appData.members.forEach(member => {
@@ -445,69 +516,55 @@
                             <i class="fa-solid fa-user text-gray-400 text-xs md:text-base"></i>
                         </div>
                         <div class="min-w-0 pr-2">
-                            <div class="font-bold text-white text-sm md:text-lg truncate">${member.name}</div>
-                            <div class="text-[10px] md:text-xs text-fc-muted truncate">${member.pos}</div>
+                            <div class="font-bold text-white text-sm md:text-lg truncate">${member.name || '-'}</div>
+                            <div class="text-[10px] md:text-xs text-fc-muted truncate">${member.pos || '-'}</div>
                         </div>
                     </td>
-                    <td class="p-3 md:p-4 text-center font-bold text-base md:text-lg">${member.ovr}</td>
-                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.games}</td>
-                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.goals}</td>
-                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.assists}</td>
-                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.passes}</td>
-                    <td class="p-3 md:p-4 text-center text-sm md:text-base font-semibold ${member.passRate >= 80 ? 'text-green-500' : 'text-yellow-500'}">${member.passRate}%</td>
-                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.tackles}</td>
-                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.tackleRate}%</td>
-                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.cleanSheets}</td>
-                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.winPct}%</td>
+                    <td class="p-3 md:p-4 text-center font-bold text-base md:text-lg">${member.ovr || '-'}</td>
+                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.games || '0'}</td>
+                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.goals || '0'}</td>
+                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.assists || '0'}</td>
+                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.passes || '0'}</td>
+                    <td class="p-3 md:p-4 text-center text-sm md:text-base font-semibold ${member.passRate >= 80 ? 'text-green-500' : 'text-yellow-500'}">${member.passRate || '0'}%</td>
+                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.tackles || '0'}</td>
+                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.tackleRate || '0'}%</td>
+                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.cleanSheets || '0'}</td>
+                    <td class="p-3 md:p-4 text-center text-sm md:text-base text-fc-muted">${member.winPct || '0'}%</td>
                 `;
                 membersBody.appendChild(tr);
             });
 
-            // Escudo de imagen reutilizable para el historial desde GitHub
-            const customShieldSVG = `
-                <img src="https://raw.githubusercontent.com/AVS-PROJECTS33/FC-DUTTI/main/Sin%20t%C3%ADtulo.png" alt="FC Dutti" class="w-full h-full p-1 object-contain object-center transform scale-110 drop-shadow-sm">
-            `;
+            const customShieldSVG = `<img src="https://raw.githubusercontent.com/AVS-PROJECTS33/FC-DUTTI/main/Sin%20t%C3%ADtulo.png" alt="FC Dutti" class="w-full h-full p-1 object-contain object-center transform scale-110 drop-shadow-sm">`;
 
-            // Generar Historial de Partidos
             const matchesContainer = document.getElementById('matches-container');
             matchesContainer.innerHTML = '';
-            appData.matches.forEach((match, index) => {
-                const isWin = match.result === 'W';
-                const isDraw = match.result === 'D';
+            appData.matches.forEach(match => {
+                const isWin = match.result === 'W', isDraw = match.result === 'D';
                 const borderColor = isWin ? 'border-green-500' : (isDraw ? 'border-yellow-500' : 'border-red-500');
                 const badgeColor = isWin ? 'bg-green-500 text-black' : (isDraw ? 'bg-yellow-500 text-black' : 'bg-red-500 text-white');
-                const badgeTextMobile = isWin ? 'V' : (isDraw ? 'E' : 'D');
-
+                
                 const div = document.createElement('div');
                 div.className = `glass-card rounded-xl p-3 md:p-6 border-l-4 ${borderColor} flex flex-row items-center justify-between gap-2 md:gap-6 relative`;
-                
                 div.innerHTML = `
-                    <!-- Nosotros -->
                     <div class="text-center w-[28%] md:w-24">
                         <div class="w-10 h-10 md:w-12 md:h-12 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-1 md:mb-2 border border-fc-border p-1">
                             ${customShieldSVG}
                         </div>
                         <span class="font-bold text-[10px] md:text-sm block truncate w-full">FC Dutti</span>
                     </div>
-
-                    <!-- Marcador -->
                     <div class="flex items-center justify-center gap-1 md:gap-3 w-[35%] md:w-[40%]">
                         <div class="text-xl md:text-3xl font-black bg-fc-dark w-8 h-10 md:w-12 md:h-14 flex items-center justify-center rounded-lg border border-fc-border ${match.scoreOurs > match.scoreTheirs ? 'text-fc-accent' : ''}">${match.scoreOurs}</div>
                         <span class="text-fc-muted font-bold text-sm md:text-base">-</span>
                         <div class="text-xl md:text-3xl font-black bg-fc-dark w-8 h-10 md:w-12 md:h-14 flex items-center justify-center rounded-lg border border-fc-border ${match.scoreTheirs > match.scoreOurs ? 'text-fc-accent' : ''}">${match.scoreTheirs}</div>
                     </div>
-
-                    <!-- Rival -->
                     <div class="text-center w-[28%] md:w-24">
                         <div class="w-10 h-10 md:w-12 md:h-12 mx-auto bg-gray-800 rounded-full flex items-center justify-center mb-1 md:mb-2 border border-fc-border">
                             <i class="fa-solid fa-shield text-gray-400 text-sm md:text-base"></i>
                         </div>
                         <span class="font-bold text-[10px] md:text-sm block truncate w-full" title="${match.opponent}">${match.opponent}</span>
                     </div>
-
-                    <!-- Etiqueta Resultado -->
                     <div class="absolute top-2 right-2 md:relative md:top-auto md:right-auto px-2 py-1 rounded text-[10px] md:text-xs font-bold uppercase tracking-wider ${badgeColor}">
-                        <span class="md:hidden">${badgeTextMobile}</span>
+                        <span class="md:hidden">${isWin ? 'V' : (isDraw ? 'E' : 'D')}</span>
                         <span class="hidden md:inline">${isWin ? 'VICTORIA' : (isDraw ? 'EMPATE' : 'DERROTA')}</span>
                     </div>
                 `;
@@ -515,13 +572,13 @@
             });
         }
 
-        // --- FUNCIONES DEL EDITOR (PANEL DE DATOS) ---
+        // --- MANEJO DEL PANEL ---
         function openSettings() {
             document.getElementById('settings-modal').classList.remove('hidden');
             document.getElementById('settings-modal').classList.add('flex');
-            // Cargar el JSON actual en el cajón de texto
             document.getElementById('json-editor').value = JSON.stringify(appData, null, 4);
             document.getElementById('settings-error').classList.add('hidden');
+            document.getElementById('ai-status').classList.add('hidden');
         }
 
         function closeSettings() {
@@ -531,24 +588,17 @@
 
         function saveSettings() {
             try {
-                // Leemos lo que has modificado
                 const newData = JSON.parse(document.getElementById('json-editor').value);
-                // Lo guardamos en la memoria del navegador/móvil
                 localStorage.setItem('fcDuttiDataLocal', JSON.stringify(newData));
-                appData = newData; // Actualizamos la app
-                renderData(); // Volvemos a dibujar las gráficas
+                appData = newData; 
+                renderData();
                 closeSettings();
             } catch (error) {
-                // Si falta alguna coma o comillas, avisamos
                 document.getElementById('settings-error').classList.remove('hidden');
             }
         }
 
-        // Inicializar
-        document.addEventListener('DOMContentLoaded', () => {
-            renderData();
-        });
-
+        document.addEventListener('DOMContentLoaded', renderData);
     </script>
 </body>
 </html>
