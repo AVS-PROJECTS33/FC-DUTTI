@@ -86,7 +86,7 @@
             
             <div class="text-center md:text-left flex-1 relative z-10 w-full">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-fc-dark border border-fc-border text-[10px] md:text-xs font-semibold text-fc-accent mb-2">
-                    <i class="fa-solid fa-trophy"></i> <span id="club-division">Hometown Heroes</span>
+                    <i class="fa-solid fa-trophy"></i> <span id="club-division">División 2</span>
                 </div>
                 <h1 id="club-name" class="text-3xl md:text-5xl font-black mb-2 tracking-tight">FC Dutti</h1>
                 <p class="text-fc-muted flex flex-wrap items-center justify-center md:justify-start gap-1 md:gap-2 text-xs md:text-base">
@@ -94,7 +94,7 @@
                     <span class="text-fc-border px-1">|</span>
                     <i class="fa-solid fa-globe"></i> <span id="club-region">Southern Europe</span>
                     <span class="text-fc-border px-1">|</span>
-                    <i class="fa-solid fa-star text-yellow-500"></i> <span id="club-skill" class="font-bold text-white">1319 Skill</span>
+                    <i class="fa-solid fa-star text-yellow-500"></i> <span id="club-skill" class="font-bold text-white">1387 Skill</span>
                 </p>
             </div>
 
@@ -186,15 +186,20 @@
             <h2 class="text-xl md:text-2xl font-bold mt-10 mb-6 flex items-center gap-2">
                 <i class="fa-solid fa-medal text-yellow-500"></i> Jugadores Destacados
             </h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-10">
-                <div class="glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-transform hover:-translate-y-1 hover:border-blue-500">
-                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center mb-3 border border-fc-border">
-                        <i class="fa-solid fa-shoe-prints text-blue-400"></i>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-10">
+                
+                <!-- MVP de FC Dutti -->
+                <div class="glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-transform hover:-translate-y-1 hover:border-pink-500 relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 w-16 h-16 bg-pink-500 opacity-20 rounded-full blur-xl group-hover:opacity-40 transition-opacity"></div>
+                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center mb-3 border border-pink-500/50 shadow-[0_0_10px_rgba(236,72,153,0.3)]">
+                        <i class="fa-solid fa-star text-pink-500"></i>
                     </div>
-                    <span id="top-pass-name" class="font-bold text-white text-sm md:text-base mb-1 truncate w-full">Cargando...</span>
-                    <span id="top-pass-val" class="text-2xl md:text-3xl font-black text-blue-400 mb-1">0%</span>
-                    <span class="text-[10px] md:text-xs text-fc-muted uppercase tracking-wider font-semibold">Mejor % Pases</span>
+                    <span id="top-mvp-name" class="font-bold text-white text-sm md:text-base mb-1 truncate w-full">Cargando...</span>
+                    <span id="top-mvp-val" class="text-2xl md:text-3xl font-black text-pink-500 mb-1">0 pts</span>
+                    <span class="text-[10px] md:text-xs text-fc-muted uppercase tracking-wider font-semibold">Jugador MVP</span>
                 </div>
+
+                <!-- Goles por Partido -->
                 <div class="glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-transform hover:-translate-y-1 hover:border-fc-accent">
                     <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center mb-3 border border-fc-border">
                         <i class="fa-solid fa-bullseye text-fc-accent"></i>
@@ -203,6 +208,8 @@
                     <span id="top-goal-val" class="text-2xl md:text-3xl font-black text-fc-accent mb-1">0.0</span>
                     <span class="text-[10px] md:text-xs text-fc-muted uppercase tracking-wider font-semibold">Goles / Partido</span>
                 </div>
+
+                <!-- Más Asistencias -->
                 <div class="glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-transform hover:-translate-y-1 hover:border-purple-500">
                     <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center mb-3 border border-fc-border">
                         <i class="fa-solid fa-hands-helping text-purple-400"></i>
@@ -211,6 +218,28 @@
                     <span id="top-assist-val" class="text-2xl md:text-3xl font-black text-purple-400 mb-1">0</span>
                     <span class="text-[10px] md:text-xs text-fc-muted uppercase tracking-wider font-semibold">Más Asistencias</span>
                 </div>
+
+                <!-- Mejor % Entradas (Tackles) -->
+                <div class="glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-transform hover:-translate-y-1 hover:border-orange-500">
+                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center mb-3 border border-fc-border">
+                        <i class="fa-solid fa-shield-halved text-orange-400"></i>
+                    </div>
+                    <span id="top-tackle-name" class="font-bold text-white text-sm md:text-base mb-1 truncate w-full">Cargando...</span>
+                    <span id="top-tackle-val" class="text-2xl md:text-3xl font-black text-orange-400 mb-1">0%</span>
+                    <span class="text-[10px] md:text-xs text-fc-muted uppercase tracking-wider font-semibold">Mejor % Entradas</span>
+                </div>
+
+                <!-- Mejor % Pases -->
+                <div class="glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-transform hover:-translate-y-1 hover:border-blue-500">
+                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center mb-3 border border-fc-border">
+                        <i class="fa-solid fa-shoe-prints text-blue-400"></i>
+                    </div>
+                    <span id="top-pass-name" class="font-bold text-white text-sm md:text-base mb-1 truncate w-full">Cargando...</span>
+                    <span id="top-pass-val" class="text-2xl md:text-3xl font-black text-blue-400 mb-1">0%</span>
+                    <span class="text-[10px] md:text-xs text-fc-muted uppercase tracking-wider font-semibold">Mejor % Pases</span>
+                </div>
+
+                <!-- Mejor % Victorias -->
                 <div class="glass-card rounded-xl p-4 md:p-6 flex flex-col items-center text-center transition-transform hover:-translate-y-1 hover:border-yellow-500">
                     <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800 flex items-center justify-center mb-3 border border-fc-border">
                         <i class="fa-solid fa-crown text-yellow-500"></i>
@@ -219,6 +248,7 @@
                     <span id="top-win-val" class="text-2xl md:text-3xl font-black text-yellow-500 mb-1">0%</span>
                     <span class="text-[10px] md:text-xs text-fc-muted uppercase tracking-wider font-semibold">Mejor % Victorias</span>
                 </div>
+
             </div>
         </div>
 
@@ -298,29 +328,46 @@
         // API KEY de Gemini.
         const apiKey = ""; 
 
-        // DATOS EXTRAÍDOS DE TUS CAPTURAS INICIALES
+        // DATOS EXTRAÍDOS DE LAS NUEVAS CAPTURAS (ACTUALIZADOS)
         const defaultFcDuttiData = {
-            stats: { matchesPlayed: 71, wins: 28, ties: 7, losses: 36, goalsFor: 116, goalsAgainst: 154, winRate: 39.44, recentForm: ['L', 'L', 'L', 'W', 'W'] },
+            stats: { 
+                division: 2,
+                matchesPlayed: 84, 
+                wins: 34, 
+                ties: 9, 
+                losses: 41, 
+                goalsFor: 147, 
+                goalsAgainst: 178, 
+                winRate: 40.48, 
+                recentForm: ['W', 'L', 'W', 'W', 'W'] 
+            },
             members: [
                 { name: "danyskaywalker", pos: "Centrocampista", ovr: 79, games: 5, goals: 1, passes: 82, passRate: 85, assists: 3, tackles: 7, tackleRate: 14, cleanSheets: 0, winPct: 20 },
                 { name: "DAVILICO_86", pos: "Centrocampista", ovr: 73, games: 7, goals: 0, passes: 69, passRate: 65, assists: 2, tackles: 1, tackleRate: 10, cleanSheets: 0, winPct: 14 },
                 { name: "gongory", pos: "Centrocampista", ovr: 82, games: 36, goals: 13, passes: 1014, passRate: 80, assists: 13, tackles: 49, tackleRate: 16, cleanSheets: 0, winPct: 47 },
                 { name: "MaJin8", pos: "Centrocampista", ovr: 79, games: 7, goals: 3, passes: 191, passRate: 84, assists: 0, tackles: 15, tackleRate: 36, cleanSheets: 0, winPct: 28 },
                 { name: "nurdine89", pos: "Delantero", ovr: 85, games: 50, goals: 16, passes: 783, passRate: 77, assists: 15, tackles: 40, tackleRate: 13, cleanSheets: 0, winPct: 36 },
-                { name: "Perlu28", pos: "Centrocampista", ovr: 81, games: 51, goals: 10, passes: 684, passRate: 75, assists: 9, tackles: 92, tackleRate: 20, cleanSheets: 0, winPct: 39 },
-                { name: "Solraac_", pos: "Centrocampista", ovr: 79, games: 48, goals: 31, passes: 700, passRate: 76, assists: 13, tackles: 54, tackleRate: 36, cleanSheets: 0, winPct: 50 },
-                { name: "xPatoloko85x", pos: "Delantero", ovr: 85, games: 28, goals: 14, passes: 630, passRate: 83, assists: 7, tackles: 43, tackleRate: 37, cleanSheets: 0, winPct: 39 }
+                { name: "Perlu28", pos: "Centrocampista", ovr: 81, games: 64, goals: 12, passes: 859, passRate: 74, assists: 14, tackles: 109, tackleRate: 22, cleanSheets: 0, winPct: 40 },
+                { name: "Solraac_", pos: "Centrocampista", ovr: 80, games: 61, goals: 41, passes: 921, passRate: 77, assists: 24, tackles: 67, tackleRate: 34, cleanSheets: 0, winPct: 49 },
+                { name: "xPatoloko85x", pos: "Delantero", ovr: 85, games: 37, goals: 27, passes: 770, passRate: 83, assists: 12, tackles: 56, tackleRate: 38, cleanSheets: 0, winPct: 43 }
             ],
             matches: [
-                { opponent: "PassiMboul nl", scoreOurs: 1, scoreTheirs: 7, result: "L" },
-                { opponent: "Kobab Alisal FC", scoreOurs: 1, scoreTheirs: 2, result: "L" },
-                { opponent: "Gitanos FC5", scoreOurs: 0, scoreTheirs: 1, result: "L" },
-                { opponent: "MAROKHA FC", scoreOurs: 1, scoreTheirs: 0, result: "W" },
-                { opponent: "puftu fc", scoreOurs: 3, scoreTheirs: 0, result: "W" }
+                { opponent: "samourÃ£Â£y yo", scoreOurs: 2, scoreTheirs: 1, result: "W" },
+                { opponent: "BIBIHELL", scoreOurs: 2, scoreTheirs: 4, result: "L" },
+                { opponent: "FC Hykos", scoreOurs: 3, scoreTheirs: 1, result: "W" },
+                { opponent: "BosHugo", scoreOurs: 4, scoreTheirs: 0, result: "W" },
+                { opponent: "La Cartel Sp", scoreOurs: 4, scoreTheirs: 1, result: "W" }
             ]
         };
 
+        // Cargar datos locales de la caché (si existen)
         let appData = localStorage.getItem('fcDuttiDataLocal') ? JSON.parse(localStorage.getItem('fcDuttiDataLocal')) : defaultFcDuttiData;
+        
+        // Auto-actualizador
+        if (defaultFcDuttiData.stats.matchesPlayed > (appData.stats.matchesPlayed || 0)) {
+            appData = defaultFcDuttiData;
+            localStorage.setItem('fcDuttiDataLocal', JSON.stringify(appData));
+        }
 
         // --- FUNCIONES IA Y FETCH ---
         async function fetchWithRetry(url, options, retries = 5) {
@@ -373,6 +420,7 @@
                                     stats: {
                                         type: "OBJECT",
                                         properties: {
+                                            division: { type: "INTEGER" },
                                             matchesPlayed: { type: "INTEGER" }, wins: { type: "INTEGER" },
                                             ties: { type: "INTEGER" }, losses: { type: "INTEGER" },
                                             goalsFor: { type: "INTEGER" }, goalsAgainst: { type: "INTEGER" },
@@ -411,18 +459,16 @@
                         const extractedData = JSON.parse(textResponse);
                         let currentData = JSON.parse(document.getElementById('json-editor').value);
                         
-                        // Fusión inteligente: Si hay stats generales, las actualiza
+                        // Fusión inteligente
                         if (extractedData.stats && Object.keys(extractedData.stats).length > 0) {
                             currentData.stats = { ...currentData.stats, ...extractedData.stats };
                         }
                         
-                        // Fusión inteligente: Si hay miembros en la foto, busca si ya existían y actualiza solo sus números nuevos
                         if (extractedData.members && extractedData.members.length > 0) {
                             extractedData.members.forEach(newMember => {
                                 if(!newMember.name) return;
                                 const existingIndex = currentData.members.findIndex(m => m.name.toLowerCase() === newMember.name.toLowerCase());
                                 if (existingIndex >= 0) {
-                                    // Sobrescribe solo los datos encontrados en la foto
                                     currentData.members[existingIndex] = { ...currentData.members[existingIndex], ...newMember };
                                 } else {
                                     currentData.members.push(newMember);
@@ -483,12 +529,19 @@
             document.getElementById('stat-winrate').textContent = (appData.stats.winRate || 0) + '%';
             document.getElementById('winrate-circle').setAttribute('stroke-dasharray', `${appData.stats.winRate || 0}, 100`);
 
+            if (appData.stats.division) {
+                document.getElementById('club-division').textContent = 'División ' + appData.stats.division;
+            }
+
             const members = appData.members;
             if(members.length > 0) {
+                
+                // 1. Mejor % de Pases
                 const topPass = members.reduce((p, c) => (p.passRate > c.passRate) ? p : c);
                 document.getElementById('top-pass-name').textContent = topPass.name;
                 document.getElementById('top-pass-val').textContent = topPass.passRate + '%';
 
+                // 2. Goles por partido
                 const validScorers = members.filter(m => m.games > 0);
                 if(validScorers.length > 0) {
                     const topGoalRatio = validScorers.reduce((p, c) => ((p.goals / p.games) > (c.goals / c.games)) ? p : c);
@@ -496,13 +549,31 @@
                     document.getElementById('top-goal-val').textContent = (topGoalRatio.goals / topGoalRatio.games).toFixed(2);
                 }
 
+                // 3. Más Asistencias
                 const topAssists = members.reduce((p, c) => (p.assists > c.assists) ? p : c);
                 document.getElementById('top-assist-name').textContent = topAssists.name;
                 document.getElementById('top-assist-val').textContent = topAssists.assists;
 
+                // 4. Mejor % Victorias
                 const topWin = members.reduce((p, c) => (p.winPct > c.winPct) ? p : c);
                 document.getElementById('top-win-name').textContent = topWin.name;
                 document.getElementById('top-win-val').textContent = topWin.winPct + '%';
+
+                // 5. Mejor % Entradas (Tackle Rate)
+                const topTackles = members.reduce((p, c) => (p.tackleRate > c.tackleRate) ? p : c);
+                document.getElementById('top-tackle-name').textContent = topTackles.name;
+                document.getElementById('top-tackle-val').textContent = topTackles.tackleRate + '%';
+
+                // 6. CÁLCULO DEL MVP (Rendimiento Absoluto)
+                // Fórmula: (Goles*50 + Asistencias*30 + Entradas*10 + Pases) / Partidos Jugados
+                const calculateMVPScore = (m) => {
+                    if (m.games === 0) return 0;
+                    return ((m.goals * 50) + (m.assists * 30) + (m.tackles * 10) + m.passes) / m.games;
+                };
+
+                const topMVP = members.reduce((p, c) => (calculateMVPScore(p) > calculateMVPScore(c)) ? p : c);
+                document.getElementById('top-mvp-name').textContent = topMVP.name;
+                document.getElementById('top-mvp-val').textContent = calculateMVPScore(topMVP).toFixed(0) + ' pts';
             }
 
             const membersBody = document.getElementById('members-table-body');
